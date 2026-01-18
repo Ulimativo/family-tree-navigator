@@ -41,7 +41,7 @@ const ThemeSwitcher = () => {
                 <div className="theme-menu">
                     <div className="theme-menu-title">Select Theme</div>
                     {Object.values(THEMES).map((t) => {
-                        const isDisabled = t !== THEMES.CLASSIC;
+                        const isDisabled = false;
                         return (
                             <button
                                 key={t}
