@@ -1,0 +1,95 @@
+.language-selector {
+    position: relative;
+}
+
+.language-selector .btn-icon.active {
+    background: var(--bg-dark);
+    color: var(--primary-color);
+}
+
+.language-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 0.5rem;
+    min-width: 160px;
+    box-shadow: var(--shadow-md);
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.language-menu-title {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0.25rem;
+}
+
+.language-option {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+    border-radius: 0.5rem;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    transition: background 0.1s;
+    text-align: left;
+}
+
+.language-option:hover {
+    background: var(--bg-dark);
+}
+
+.language-option.active {
+    background: color-mix(in srgb, var(--primary-color) 5%, transparent);
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.language-label {
+    flex: 1;
+}
+
+.check-icon {
+    margin-left: auto;
+    color: var(--primary-color);
+}
+
+/* Classic Theme Styling */
+[data-theme="classic"] .language-menu {
+    background: var(--bg-card);
+    border: 2px solid var(--border-dark);
+    box-shadow: var(--shadow-lg);
+}
+
+[data-theme="classic"] .language-menu-title {
+    border-bottom: 1px solid var(--border-dark);
+    color: var(--text-secondary);
+    font-family: var(--font-family-ui);
+}
+
+[data-theme="classic"] .language-option {
+    border-radius: var(--radius-md);
+}
+
+[data-theme="classic"] .language-option:hover {
+    background: var(--bg-dark);
+}
+
+[data-theme="classic"] .language-option.active {
+    background: color-mix(in srgb, var(--primary-color) 10%, var(--bg-card));
+    box-shadow: var(--shadow-sm), inset 0 1px 0 var(--emboss-highlight);
+}

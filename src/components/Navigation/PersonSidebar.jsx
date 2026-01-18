@@ -1,8 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { Search, User, Filter, ChevronLeft, ChevronRight, Users, Calendar } from 'lucide-react';
 import { getYear } from '../../lib/analysis/statistics.js';
+import { useTranslation } from '../../i18n/useTranslation.js';
 
 const PersonSidebar = ({ individuals, families, onSelectPerson, selectedId }) => {
+    const { t } = useTranslation();
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [showFilters, setShowFilters] = useState(false);
@@ -69,7 +71,7 @@ const PersonSidebar = ({ individuals, families, onSelectPerson, selectedId }) =>
             <button
                 className="toggle-sidebar"
                 onClick={() => setIsCollapsed(!isCollapsed)}
-                title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
+                title={isCollapsed ? t('common.expand') : t('common.collapse')}
             >
                 {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
             </button>
@@ -81,14 +83,14 @@ const PersonSidebar = ({ individuals, families, onSelectPerson, selectedId }) =>
                             <Search size={16} className="search-icon" />
                             <input
                                 type="text"
-                                placeholder="Search ancestors..."
+                                placeholder={t('sidebar.searchPlaceholder')}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                             <button
                                 className={`filter-toggle ${showFilters ? 'active' : ''}`}
                                 onClick={() => setShowFilters(!showFilters)}
-                                title="Filters"
+                                title={t('sidebar.filter')}
                             >
                                 <Filter size={16} />
                             </button>
@@ -97,12 +99,12 @@ const PersonSidebar = ({ individuals, families, onSelectPerson, selectedId }) =>
                         {showFilters && (
                             <div className="filters-panel">
                                 <div className="filter-group">
-                                    <label><Users size={12} /> Family</label>
+                                    <label><Users size={12} /> {t('sidebar.family')}</label>
                                     <select
                                         value={filters.familyId}
                                         onChange={(e) => setFilters({ ...filters, familyId: e.target.value })}
                                     >
-                                        <option value="all">All Families</option>
+                                        <option value="all">{t('sidebar.allFamilies')}</option>
                                         {families.map(fam => {
                                             const husband = individuals.find(i => i.id === fam.husband);
                                             const wife = individuals.find(i => i.id === fam.wife);
@@ -116,18 +118,18 @@ const PersonSidebar = ({ individuals, families, onSelectPerson, selectedId }) =>
                                     </select>
                                 </div>
                                 <div className="filter-group">
-                                    <label><Calendar size={12} /> Timespan</label>
+                                    <label><Calendar size={12} /> {t('sidebar.timespan')}</label>
                                     <div className="range-inputs">
                                         <input
                                             type="number"
-                                            placeholder="From"
+                                            placeholder={t('sidebar.from')}
                                             value={filters.yearStart}
                                             onChange={(e) => setFilters({ ...filters, yearStart: e.target.value })}
                                         />
                                         <span>-</span>
                                         <input
                                             type="number"
-                                            placeholder="To"
+                                            placeholder={t('sidebar.to')}
                                             value={filters.yearEnd}
                                             onChange={(e) => setFilters({ ...filters, yearEnd: e.target.value })}
                                         />
@@ -145,13 +147,13 @@ const PersonSidebar = ({ individuals, families, onSelectPerson, selectedId }) =>
                             >
                                 <User size={14} className="item-icon" />
                                 <div className="item-info">
-                                    <span className="item-name">{indi.names[0]?.value.replace(/\//g, '') || 'Unknown'}</span>
+                                    <span className="item-name">{indi.names[0]?.value.replace(/\//g, '') || t('sidebar.unknown')}</span>
                                     <span className="item-id text-muted">{indi.id}</span>
                                 </div>
                             </div>
                         ))}
                         {filteredIndividuals.length === 0 && (
-                            <div className="empty-state">No matches found</div>
+                            <div className="empty-state">{t('sidebar.noResults')}</div>
                         )}
                     </div>
                 </>

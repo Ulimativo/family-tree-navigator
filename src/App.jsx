@@ -5,23 +5,26 @@ import TreeView from './components/Tree/TreeView.jsx'
 import ProfileView from './components/Profile/ProfileView.jsx'
 import PersonSidebar from './components/Navigation/PersonSidebar.jsx'
 import ThemeSwitcher from './components/UI/ThemeSwitcher.jsx'
+import LanguageSelector from './components/UI/LanguageSelector.jsx'
 import StatisticsDashboard from './components/Visualization/StatisticsDashboard.jsx'
 import DynastyDashboard from './components/Clustering/DynastyDashboard.jsx'
 import { BarChart2, Layers, Zap, Database, X as CloseIcon } from 'lucide-react';
 import { ProjectMode } from './lib/gedcom/models.js';
 import { ProjectExporter } from './lib/gedcom/exporter.js';
+import { useTranslation } from './i18n/useTranslation.js';
 
 const ImportModal = ({ onSelectMode, onClose }) => {
     const [selectedMode, setSelectedMode] = useState(ProjectMode.LIGHTWEIGHT);
+    const { t } = useTranslation();
 
     return (
         <div className="modal-overlay">
             <div className="import-modal">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                    <h2>Project Configuration</h2>
+                    <h2>{t('modal.projectConfiguration')}</h2>
                     <button className="btn-icon" onClick={onClose}><CloseIcon size={20} /></button>
                 </div>
-                <p className="text-muted">Choose how you want to work with this family tree.</p>
+                <p className="text-muted">{t('modal.chooseWorkflow')}</p>
 
                 <div className="tier-selection">
                     <div
@@ -29,12 +32,12 @@ const ImportModal = ({ onSelectMode, onClose }) => {
                         onClick={() => setSelectedMode(ProjectMode.LIGHTWEIGHT)}
                     >
                         <div className="tier-icon"><Zap size={24} /></div>
-                        <h3>Lightweight</h3>
-                        <p>Browser-only. Best for a quick, privacy-focused look at your GEDCOM file.</p>
+                        <h3>{t('modal.lightweightTitle')}</h3>
+                        <p>{t('modal.lightweightDesc')}</p>
                         <ul className="tier-features">
-                            <li>Visual Tree Browsing</li>
-                            <li>Standard GEDCOM Editing</li>
-                            <li>Import/Export GEDCOM</li>
+                            <li>{t('modal.lightweightFeature1')}</li>
+                            <li>{t('modal.lightweightFeature2')}</li>
+                            <li>{t('modal.lightweightFeature3')}</li>
                         </ul>
                     </div>
 
@@ -54,28 +57,28 @@ const ImportModal = ({ onSelectMode, onClose }) => {
                             fontSize: '0.75rem',
                             fontWeight: 'bold'
                         }}>
-                            COMING SOON
+                            {t('modal.comingSoon')}
                         </div>
                         <div className="tier-icon"><Database size={24} /></div>
-                        <h3>Persistent Project</h3>
-                        <p>Cloud-synced workspace. Enables advanced features and persistent storage.</p>
+                        <h3>{t('modal.persistentTitle')}</h3>
+                        <p>{t('modal.persistentDesc')}</p>
                         <ul className="tier-features">
-                            <li>Advanced Dynasties</li>
-                            <li>Heir Tracking</li>
-                            <li>Cloud Sync (Firebase)</li>
-                            <li>Media & Photos</li>
+                            <li>{t('modal.persistentFeature1')}</li>
+                            <li>{t('modal.persistentFeature2')}</li>
+                            <li>{t('modal.persistentFeature3')}</li>
+                            <li>{t('modal.persistentFeature4')}</li>
                         </ul>
                     </div>
                 </div>
 
                 <div className="modal-footer">
-                    <button className="btn-icon" onClick={onClose} style={{ borderRadius: '0.5rem', padding: '0.75rem 1.5rem' }}>Cancel</button>
+                    <button className="btn-icon" onClick={onClose} style={{ borderRadius: '0.5rem', padding: '0.75rem 1.5rem' }}>{t('common.cancel')}</button>
                     <button
                         className="btn-primary"
                         onClick={() => onSelectMode(selectedMode)}
                         style={{ padding: '0.75rem 2rem' }}
                     >
-                        Start Project
+                        {t('modal.startProject')}
                     </button>
                 </div>
             </div>
@@ -92,6 +95,7 @@ const AppContent = () => {
         selectedPersonId,
         setSelectedPersonId
     } = useTree();
+    const { t } = useTranslation();
 
     const [showStats, setShowStats] = useState(false);
     const [showDynasty, setShowDynasty] = useState(false);
@@ -162,19 +166,20 @@ const AppContent = () => {
             )}
             <header className="app-header">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <h1>Family Tree Navigator</h1>
+                    <h1>{t('header.title')}</h1>
                     <ThemeSwitcher />
+                    <LanguageSelector />
                     <button
                         className="btn-icon"
                         onClick={() => setShowStats(true)}
-                        title="View Statistics"
+                        title={t('header.statistics')}
                     >
                         <BarChart2 size={20} />
                     </button>
                     <button
                         className="btn-icon"
                         onClick={() => setShowDynasty(true)}
-                        title="Dynasty & Clusters"
+                        title={t('header.dynasty')}
                     >
                         <Layers size={20} />
                     </button>
@@ -191,7 +196,7 @@ const AppContent = () => {
                         className="btn-secondary"
                         onClick={() => document.getElementById('gedcom-upload').click()}
                     >
-                        Import
+                        {t('header.import')}
                     </button>
 
                     {data && (
@@ -200,7 +205,7 @@ const AppContent = () => {
                                 className="btn-primary"
                                 onClick={() => setShowExportDropdown(!showExportDropdown)}
                             >
-                                Export
+                                {t('header.export')}
                             </button>
                             {showExportDropdown && (
                                 <div className="dropdown-menu" style={{ position: 'absolute', top: '100%', right: 0, marginTop: '0.5rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '0.5rem', boxShadow: 'var(--shadow-lg)', zIndex: 200, minWidth: '160px', padding: '0.5rem' }}>
@@ -209,14 +214,14 @@ const AppContent = () => {
                                         style={{ width: '100%', textAlign: 'left', padding: '0.6rem 1rem', background: 'none', border: 'none', color: 'var(--text-main)', cursor: 'pointer', borderRadius: '0.3rem' }}
                                         onClick={() => handleExport('json')}
                                     >
-                                        JSON Project (Full)
+                                        {t('export.exportJson')}
                                     </button>
                                     <button
                                         className="dropdown-item"
                                         style={{ width: '100%', textAlign: 'left', padding: '0.6rem 1rem', background: 'none', border: 'none', color: 'var(--text-main)', cursor: 'pointer', borderRadius: '0.3rem' }}
                                         onClick={() => handleExport('gedcom')}
                                     >
-                                        GEDCOM (Standard)
+                                        {t('export.exportGedcom')}
                                     </button>
                                 </div>
                             )}
@@ -254,76 +259,76 @@ const AppContent = () => {
                     <div className="welcome-screen">
                         <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
                             <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem', background: 'linear-gradient(135deg, var(--primary-color), var(--accent-color))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                                Discover Your Family Legacy
+                                {t('welcome.title')}
                             </h1>
                             <p style={{ fontSize: '1.2rem', color: 'var(--text-muted)', marginBottom: '3rem' }}>
-                                A modern, privacy-focused genealogy explorer with powerful visualization and analysis tools
+                                {t('welcome.subtitle')}
                             </p>
 
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem', marginBottom: '3rem', textAlign: 'left' }}>
                                 <div style={{ padding: '1.5rem', background: 'var(--bg-card)', borderRadius: '1rem', border: '1px solid var(--border)' }}>
                                     <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🌳</div>
-                                    <h3 style={{ marginBottom: '0.5rem' }}>Interactive Tree</h3>
+                                    <h3 style={{ marginBottom: '0.5rem' }}>{t('welcome.feature1Title')}</h3>
                                     <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                                        Navigate through generations with an intuitive, dynamic family tree visualization
+                                        {t('welcome.feature1Desc')}
                                     </p>
                                 </div>
 
                                 <div style={{ padding: '1.5rem', background: 'var(--bg-card)', borderRadius: '1rem', border: '1px solid var(--border)' }}>
                                     <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📊</div>
-                                    <h3 style={{ marginBottom: '0.5rem' }}>Deep Analytics</h3>
+                                    <h3 style={{ marginBottom: '0.5rem' }}>{t('welcome.feature2Title')}</h3>
                                     <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                                        Uncover patterns with dynasty analysis, demographics, and statistical insights
+                                        {t('welcome.feature2Desc')}
                                     </p>
                                 </div>
 
                                 <div style={{ padding: '1.5rem', background: 'var(--bg-card)', borderRadius: '1rem', border: '1px solid var(--border)' }}>
                                     <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🔒</div>
-                                    <h3 style={{ marginBottom: '0.5rem' }}>Privacy First</h3>
+                                    <h3 style={{ marginBottom: '0.5rem' }}>{t('welcome.feature3Title')}</h3>
                                     <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                                        All processing happens in your browser. Your data never leaves your device
+                                        {t('welcome.feature3Desc')}
                                     </p>
                                 </div>
 
                                 <div style={{ padding: '1.5rem', background: 'var(--bg-card)', borderRadius: '1rem', border: '1px solid var(--border)' }}>
                                     <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📝</div>
-                                    <h3 style={{ marginBottom: '0.5rem' }}>GEDCOM 7.0</h3>
+                                    <h3 style={{ marginBottom: '0.5rem' }}>{t('welcome.feature4Title')}</h3>
                                     <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                                        Full support for the latest GEDCOM standard with 140+ attribute types
+                                        {t('welcome.feature4Desc')}
                                     </p>
                                 </div>
 
                                 <div style={{ padding: '1.5rem', background: 'var(--bg-card)', borderRadius: '1rem', border: '1px solid var(--border)' }}>
                                     <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>⚡</div>
-                                    <h3 style={{ marginBottom: '0.5rem' }}>Lightning Fast</h3>
+                                    <h3 style={{ marginBottom: '0.5rem' }}>{t('welcome.feature5Title')}</h3>
                                     <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                                        Instant loading and smooth interactions, even with thousands of individuals
+                                        {t('welcome.feature5Desc')}
                                     </p>
                                 </div>
 
                                 <div style={{ padding: '1.5rem', background: 'var(--bg-card)', borderRadius: '1rem', border: '1px solid var(--border)' }}>
                                     <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🎨</div>
-                                    <h3 style={{ marginBottom: '0.5rem' }}>Beautiful Design</h3>
+                                    <h3 style={{ marginBottom: '0.5rem' }}>{t('welcome.feature6Title')}</h3>
                                     <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                                        Elegant Classic Parchment theme designed for extended research sessions
+                                        {t('welcome.feature6Desc')}
                                     </p>
                                 </div>
                             </div>
 
                             <div style={{ padding: '2rem', background: 'var(--bg-card)', borderRadius: '1rem', border: '2px dashed var(--border)' }}>
-                                <h3 style={{ marginBottom: '1rem' }}>Ready to Begin?</h3>
+                                <h3 style={{ marginBottom: '1rem' }}>{t('welcome.readyBegin')}</h3>
                                 <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
-                                    Import your GEDCOM file to start exploring your family history
+                                    {t('welcome.importDesc')}
                                 </p>
                                 <button
                                     className="btn-primary"
                                     onClick={() => document.getElementById('gedcom-upload').click()}
                                     style={{ padding: '1rem 2rem', fontSize: '1.1rem' }}
                                 >
-                                    Import GEDCOM File
+                                    {t('welcome.importGedcom')}
                                 </button>
                                 <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '1rem' }}>
-                                    Supports .ged files from Ancestry, FamilySearch, MyHeritage, and more
+                                    {t('welcome.supportsFormats')}
                                 </p>
                             </div>
                         </div>
