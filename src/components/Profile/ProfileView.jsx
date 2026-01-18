@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { X, Calendar, MapPin, User, Users, ChevronRight, Edit2, Save, Trash2, Plus, Check, Layers } from 'lucide-react';
 import '../../styles/profile.css';
 import { useTree } from '../../context/TreeContext.jsx';
+import { useTranslation } from '../../i18n/useTranslation.js';
 import TimelineView from '../Visualization/TimelineView.jsx';
 import { getTagInfo, TAG_METADATA } from '../../lib/gedcom/schema.js';
 
 const ProfileView = ({ person, families, individuals, onClose, onNavigate }) => {
     const { updatePerson } = useTree();
+    const { t } = useTranslation();
     const [isEditing, setIsEditing] = useState(false);
     const [editFormData, setEditFormData] = useState({});
 
@@ -54,21 +56,21 @@ const ProfileView = ({ person, families, individuals, onClose, onNavigate }) => 
     };
 
     const handleDeleteEvent = (index) => {
-        if (confirm('Are you sure you want to delete this event?')) {
+        if (confirm(t('profile.deleteEventConfirm'))) {
             deleteEvent(person.id, index);
         }
     };
 
     // Resolve Relationships
     const getPerson = (id) => individuals.find(i => i.id === id);
-    const cleanName = (name) => name ? name.replace(/\//g, '') : 'Unknown';
+    const cleanName = (name) => name ? name.replace(/\//g, '') : t('profile.unknown');
 
     const parents = [];
     if (person.familyAsChild) {
         const fam = families.find(f => f.id === person.familyAsChild);
         if (fam) {
-            if (fam.husband) parents.push({ id: fam.husband, role: 'Father', name: cleanName(getPerson(fam.husband)?.names[0]?.value) });
-            if (fam.wife) parents.push({ id: fam.wife, role: 'Mother', name: cleanName(getPerson(fam.wife)?.names[0]?.value) });
+            if (fam.husband) parents.push({ id: fam.husband, role: t('profile.father'), name: cleanName(getPerson(fam.husband)?.names[0]?.value) });
+            if (fam.wife) parents.push({ id: fam.wife, role: t('profile.mother'), name: cleanName(getPerson(fam.wife)?.names[0]?.value) });
         }
     }
 
@@ -78,9 +80,9 @@ const ProfileView = ({ person, families, individuals, onClose, onNavigate }) => 
         const fam = families.find(f => f.id === famId);
         if (fam) {
             const spouseId = fam.husband === person.id ? fam.wife : fam.husband;
-            if (spouseId) spouses.push({ id: spouseId, role: 'Spouse', name: cleanName(getPerson(spouseId)?.names[0]?.value) });
+            if (spouseId) spouses.push({ id: spouseId, role: t('profile.spouse'), name: cleanName(getPerson(spouseId)?.names[0]?.value) });
             fam.children.forEach(childId => {
-                children.push({ id: childId, role: 'Child', name: cleanName(getPerson(childId)?.names[0]?.value) });
+                children.push({ id: childId, role: t('profile.children'), name: cleanName(getPerson(childId)?.names[0]?.value) });
             });
         }
     });
@@ -100,7 +102,7 @@ const ProfileView = ({ person, families, individuals, onClose, onNavigate }) => 
                                 onChange={e => setEditFormData({ ...editFormData, name: e.target.value })}
                             />
                         ) : (
-                            <h2>{person.names[0]?.value.replace(/\//g, '') || 'Unknown Person'}</h2>
+                            <h2>{person.names[0]?.value.replace(/\//g, '') || t('profile.unknownPerson')}</h2>
                         )}
                         <span className="person-id">{person.id}</span>
                     </div>
@@ -125,25 +127,25 @@ const ProfileView = ({ person, families, individuals, onClose, onNavigate }) => 
                 <div className="actions-bar">
                     {showAddMenu ? (
                         <div className="add-menu">
-                            <button onClick={() => handleAddRelative('father')}>+ Father</button>
-                            <button onClick={() => handleAddRelative('mother')}>+ Mother</button>
-                            <button onClick={() => handleAddRelative('spouse')}>+ Spouse</button>
-                            <button onClick={() => handleAddRelative('child')}>+ Child</button>
-                            <button className="cancel" onClick={() => setShowAddMenu(false)}>Cancel</button>
+                            <button onClick={() => handleAddRelative('father')}>{t('profile.addFather')}</button>
+                            <button onClick={() => handleAddRelative('mother')}>{t('profile.addMother')}</button>
+                            <button onClick={() => handleAddRelative('spouse')}>{t('profile.addSpouseButton')}</button>
+                            <button onClick={() => handleAddRelative('child')}>{t('profile.addChildButton')}</button>
+                            <button className="cancel" onClick={() => setShowAddMenu(false)}>{t('common.cancel')}</button>
                         </div>
                     ) : (
                         <button className="btn-action" onClick={() => setShowAddMenu(true)}>
-                            <Users size={16} /> Add Relative
+                            <Users size={16} /> {t('profile.addParent')}
                         </button>
                     )}
                 </div>
 
                 <section className="profile-section">
                     <div className="section-header">
-                        <h3><Calendar size={14} /> Life Events</h3>
+                        <h3><Calendar size={14} /> {t('profile.events')}</h3>
                         {isEditing && (
                             <button className="btn-add-event" onClick={() => startEditEvent('new')}>
-                                <Plus size={14} /> Add Event
+                                <Plus size={14} /> {t('profile.addEventButton')}
                             </button>
                         )}
                     </div>
@@ -189,15 +191,15 @@ const ProfileView = ({ person, families, individuals, onClose, onNavigate }) => 
                 </section>
 
                 <section className="profile-section">
-                    <h3><Users size={14} /> Relationships</h3>
+                    <h3><Users size={14} /> {t('profile.relationships')}</h3>
 
                     {parents.length > 0 && (
                         <div className="rel-group">
-                            <h4 className="rel-type">Parents</h4>
+                            <h4 className="rel-type">{t('profile.parents')}</h4>
                             {parents.map(p => (
                                 <div key={p.id} className="relationship-card" onClick={() => onNavigate(p.id)}>
                                     <span className="rel-role">{p.role}</span>
-                                    <span className="rel-name">{p.name || 'Unknown'}</span>
+                                    <span className="rel-name">{p.name || t('profile.unknown')}</span>
                                     <ChevronRight size={14} className="ml-auto text-muted" />
                                 </div>
                             ))}
@@ -206,11 +208,11 @@ const ProfileView = ({ person, families, individuals, onClose, onNavigate }) => 
 
                     {spouses.length > 0 && (
                         <div className="rel-group">
-                            <h4 className="rel-type">Spouses</h4>
+                            <h4 className="rel-type">{t('profile.spouses')}</h4>
                             {spouses.map(s => (
                                 <div key={s.id} className="relationship-card" onClick={() => onNavigate(s.id)}>
                                     <span className="rel-role">{s.role}</span>
-                                    <span className="rel-name">{s.name || 'Unknown'}</span>
+                                    <span className="rel-name">{s.name || t('profile.unknown')}</span>
                                     <ChevronRight size={14} className="ml-auto text-muted" />
                                 </div>
                             ))}
@@ -219,11 +221,11 @@ const ProfileView = ({ person, families, individuals, onClose, onNavigate }) => 
 
                     {children.length > 0 && (
                         <div className="rel-group">
-                            <h4 className="rel-type">Children</h4>
+                            <h4 className="rel-type">{t('profile.children')}</h4>
                             {children.map(c => (
                                 <div key={c.id} className="relationship-card" onClick={() => onNavigate(c.id)}>
                                     <span className="rel-role">{c.role}</span>
-                                    <span className="rel-name">{c.name || 'Unknown'}</span>
+                                    <span className="rel-name">{c.name || t('profile.unknown')}</span>
                                     <ChevronRight size={14} className="ml-auto text-muted" />
                                 </div>
                             ))}

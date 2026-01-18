@@ -2,12 +2,14 @@
 import React, { useState, useMemo } from 'react';
 import { Layers, X, Plus, Info, Users, MapPin, Award, Search, Trash2, Crown, UserCheck, ShieldCheck, Filter, Edit2 } from 'lucide-react';
 import { useTree } from '../../context/TreeContext.jsx';
+import { useTranslation } from '../../i18n/useTranslation.js';
 import ClusterManager from './ClusterManager.jsx';
 import '../../styles/clustering.css';
 import { findCommonAncestors, computeClusterStats, categorizeMembers, calculateHeir, pruneByDegrees } from '../../lib/analysis/clustering.js';
 
 const DynastyDashboard = ({ onClose }) => {
     const { data, deleteCluster } = useTree();
+    const { t } = useTranslation();
     const [selectedClusterId, setSelectedClusterId] = useState(null);
     const [isCreating, setIsCreating] = useState(false);
     const [editingCluster, setEditingCluster] = useState(null);
@@ -72,7 +74,7 @@ const DynastyDashboard = ({ onClose }) => {
 
     const handleDelete = (e, id) => {
         e.stopPropagation();
-        if (confirm('Delete this cluster?')) {
+        if (confirm(t('dynasty.deleteConfirm'))) {
             deleteCluster(id);
             if (selectedClusterId === id) setSelectedClusterId(null);
         }
@@ -82,14 +84,14 @@ const DynastyDashboard = ({ onClose }) => {
         <div className="dynasty-overlay">
             <div className="dynasty-modal">
                 <div className="dynasty-header">
-                    <h2><Layers className="header-icon" /> Dynasty & Cluster Management</h2>
+                    <h2><Layers className="header-icon" /> {t('dynasty.title')}</h2>
                     <button className="btn-close" onClick={onClose}><X size={24} /></button>
                 </div>
 
                 <div className="dynasty-content">
                     <div className="cluster-sidebar">
                         <button className="btn-create-cluster" onClick={() => setIsCreating(true)}>
-                            <Plus size={18} /> New Group
+                            <Plus size={18} /> {t('dynasty.manageClusters')}
                         </button>
 
                         <div className="cluster-list">
@@ -107,7 +109,7 @@ const DynastyDashboard = ({ onClose }) => {
                                     </div>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                         <span className="text-muted" style={{ fontSize: '0.75rem' }}>
-                                            {cluster.personIds.length} members
+                                            {cluster.personIds.length} {t('dynasty.members')}
                                         </span>
                                         <button className="btn-icon" onClick={(e) => handleDelete(e, cluster.id)}>
                                             <Trash2 size={14} />
@@ -116,7 +118,7 @@ const DynastyDashboard = ({ onClose }) => {
                                 </div>
                             ))}
                             {clusters.length === 0 && (
-                                <div className="empty-state">No clusters created yet.</div>
+                                <div className="empty-state">{t('dynasty.noClustersYet')}</div>
                             )}
                         </div>
                     </div>
@@ -139,20 +141,20 @@ const DynastyDashboard = ({ onClose }) => {
                                         </span>
                                     </div>
                                     <p className="text-muted" style={{ marginBottom: '1.5rem' }}>
-                                        {selectedCluster.description || 'No description provided.'}
+                                        {selectedCluster.description || t('dynasty.noDescription')}
                                     </p>
 
                                     {selectedCluster.type === 'DYNASTY' && (
                                         <div className="succession-banner" style={{ display: 'flex', gap: '2rem', padding: '1rem', background: 'rgba(0,0,0,0.2)', borderRadius: '0.75rem', marginBottom: '1.5rem', border: '1px solid rgba(255,255,255,0.05)' }}>
                                             <div className="banner-item">
-                                                <div className="meta-label"><Crown size={12} /> Head of House</div>
+                                                <div className="meta-label"><Crown size={12} /> {t('dynasty.headOfHouse')}</div>
                                                 <div className="meta-value" style={{ color: 'var(--primary-color)' }}>
-                                                    {selectedCluster.headOfHouseId ? (individuals.find(i => i.id === selectedCluster.headOfHouseId)?.names[0]?.value?.replace(/\//g, '') || 'Unknown Person') : 'None Set'}
+                                                    {selectedCluster.headOfHouseId ? (individuals.find(i => i.id === selectedCluster.headOfHouseId)?.names[0]?.value?.replace(/\//g, '') || t('dynasty.unknownPerson')) : t('dynasty.noneSet')}
                                                 </div>
                                             </div>
                                             {heirId && (
                                                 <div className="banner-item">
-                                                    <div className="meta-label"><ShieldCheck size={12} /> Heir Apparent</div>
+                                                    <div className="meta-label"><ShieldCheck size={12} /> {t('dynasty.heirApparent')}</div>
                                                     <div className="meta-value">
                                                         {individuals.find(i => i.id === heirId)?.names[0]?.value?.replace(/\//g, '') || 'Calculating...'}
                                                     </div>
@@ -163,45 +165,45 @@ const DynastyDashboard = ({ onClose }) => {
 
                                     <div className="cluster-meta-grid">
                                         <div className="meta-item">
-                                            <span className="meta-label">Defining Roots</span>
+                                            <span className="meta-label">{t('dynasty.definingRoots')}</span>
                                             <div className="meta-value">
                                                 {commonAncestors.length > 0 ? (
                                                     commonAncestors.map(id => (
                                                         <div key={id} style={{ fontSize: '0.9rem' }}>
-                                                            <Award size={14} /> {individuals.find(i => i.id === id)?.names[0]?.value?.replace(/\//g, '') || 'Unknown Root'}
+                                                            <Award size={14} /> {individuals.find(i => i.id === id)?.names[0]?.value?.replace(/\//g, '') || t('dynasty.unknown')}
                                                         </div>
                                                     ))
-                                                ) : 'No shared root identified'}
+                                                ) : t('dynasty.noRootIdentified')}
                                             </div>
                                         </div>
                                         <div className="meta-item">
-                                            <span className="meta-label">Coverage</span>
-                                            <span className="meta-value">{members.persons.length} Individuals, {members.families.length} Families</span>
+                                            <span className="meta-label">{t('dynasty.coverage')}</span>
+                                            <span className="meta-value">{members.persons.length} {t('dynasty.members')}, {members.families.length} {t('statistics.families')}</span>
                                         </div>
                                     </div>
 
                                     {clusterStats && (
                                         <div className="cluster-meta-grid" style={{ marginTop: '2rem', borderTop: '1px solid var(--border)', paddingTop: '1.5rem' }}>
                                             <div className="meta-item">
-                                                <span className="meta-label">Earliest Founder</span>
+                                                <span className="meta-label">{t('dynasty.earliestFounder')}</span>
                                                 <div className="meta-value">
                                                     {clusterStats.earliest.person ? (
                                                         <>
-                                                            {clusterStats.earliest.person.names[0]?.value?.replace(/\//g, '') || 'Unknown'}
+                                                            {clusterStats.earliest.person.names[0]?.value?.replace(/\//g, '') || t('dynasty.unknown')}
                                                             <span className="text-muted" style={{ fontSize: '0.8rem', marginLeft: '0.5rem' }}>
-                                                                (b. {clusterStats.earliest.year})
+                                                                ({t('dynasty.born')} {clusterStats.earliest.year})
                                                             </span>
                                                         </>
-                                                    ) : 'Unknown'}
+                                                    ) : t('dynasty.unknown')}
                                                 </div>
                                             </div>
                                             <div className="meta-item">
-                                                <span className="meta-label">Lineage Span</span>
-                                                <span className="meta-value">{clusterStats.lineageSpan} Years</span>
+                                                <span className="meta-label">{t('dynasty.lineageSpan')}</span>
+                                                <span className="meta-value">{clusterStats.lineageSpan} {t('dynasty.years')}</span>
                                             </div>
                                             <div className="meta-item">
-                                                <span className="meta-label">Core Surnames</span>
-                                                <span className="meta-value">{clusterStats.topSurnames.join(', ') || 'N/A'}</span>
+                                                <span className="meta-label">{t('dynasty.coreSurnames')}</span>
+                                                <span className="meta-value">{clusterStats.topSurnames.join(', ') || t('statistics.notAvailable')}</span>
                                             </div>
                                         </div>
                                     )}
@@ -210,7 +212,7 @@ const DynastyDashboard = ({ onClose }) => {
                                 <section>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                                         <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
-                                            <Users size={18} /> Group Members
+                                            <Users size={18} /> {t('dynasty.groupMembers')}
                                             <span style={{ fontSize: '0.8rem', opacity: 0.5, marginLeft: '0.5rem' }}>({displayedMembers.length})</span>
                                         </h4>
                                         <div className="view-selector" style={{ display: 'flex', background: 'var(--bg-dark)', padding: '2px', borderRadius: '0.5rem', border: '1px solid var(--border)' }}>
@@ -219,14 +221,14 @@ const DynastyDashboard = ({ onClose }) => {
                                                 onClick={() => setViewMode('house')}
                                                 style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem', borderRadius: '0.4rem', border: 'none', background: viewMode === 'house' ? 'var(--primary-color)' : 'transparent', color: 'white', cursor: 'pointer' }}
                                             >
-                                                Royal House
+                                                {t('dynasty.royalHouse')}
                                             </button>
                                             <button
                                                 className={`btn-toggle ${viewMode === 'family' ? 'active' : ''}`}
                                                 onClick={() => setViewMode('family')}
                                                 style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem', borderRadius: '0.4rem', border: 'none', background: viewMode === 'family' ? 'var(--primary-color)' : 'transparent', color: 'white', cursor: 'pointer' }}
                                             >
-                                                Royal Family
+                                                {t('dynasty.royalFamily')}
                                             </button>
                                         </div>
                                     </div>
@@ -240,9 +242,9 @@ const DynastyDashboard = ({ onClose }) => {
                                                         {person.id === selectedCluster.headOfHouseId ? <Crown size={16} color="gold" /> : (isDynast ? <ShieldCheck size={16} /> : <Users size={16} />)}
                                                     </div>
                                                     <div className="member-info">
-                                                        <span className="member-name">{person.names[0]?.value?.replace(/\//g, '') || 'Unknown'}</span>
+                                                        <span className="member-name">{person.names[0]?.value?.replace(/\//g, '') || t('dynasty.unknown')}</span>
                                                         <span className="member-type">
-                                                            {person.id} {isDynast ? '• House Member' : '• Rel./Spouse'}
+                                                            {person.id} {isDynast ? `• ${t('dynasty.houseMember')}` : `• ${t('dynasty.relSpouse')}`}
                                                         </span>
                                                     </div>
                                                 </div>
@@ -254,8 +256,8 @@ const DynastyDashboard = ({ onClose }) => {
                         ) : (
                             <div className="empty-state" style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                 <Info size={48} style={{ marginBottom: '1rem', opacity: 0.2 }} />
-                                <h3>Select a group to view insights</h3>
-                                <p>Dynasties, Geographic Clusters, and Genetic groups will appear here.</p>
+                                <h3>{t('dynasty.selectGroup')}</h3>
+                                <p>{t('dynasty.clustersInfo')}</p>
                             </div>
                         )}
                     </div>

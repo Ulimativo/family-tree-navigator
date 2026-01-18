@@ -2,10 +2,12 @@ import React, { useState, useMemo } from 'react';
 import { Plus, X, Tag, Users, MapPin, Dna, Save } from 'lucide-react';
 import { ClusterType, InheritanceType, SuccessionLaw } from '../../lib/gedcom/models.js';
 import { useTree } from '../../context/TreeContext.jsx';
+import { useTranslation } from '../../i18n/useTranslation.js';
 import { autoClusterBySurname, getAllDescendants } from '../../lib/analysis/clustering.js';
 
 const ClusterManager = ({ onClose, initialCluster = null }) => {
     const { data, createCluster, updateCluster } = useTree();
+    const { t } = useTranslation();
     const [formData, setFormData] = useState(initialCluster || {
         name: '',
         description: '',
@@ -74,7 +76,7 @@ const ClusterManager = ({ onClose, initialCluster = null }) => {
         <div className="dynasty-overlay">
             <div className="dynasty-modal" style={{ maxWidth: '600px', maxHeight: '90vh', overflowY: 'auto' }}>
                 <div className="dynasty-header">
-                    <h2>{initialCluster ? 'Edit Group Settings' : 'New Cluster / Dynasty'}</h2>
+                    <h2>{initialCluster ? t('dynasty.editGroupSettings') : t('dynasty.newClusterDynasty')}</h2>
                     <button className="btn-icon" onClick={onClose}><X /></button>
                 </div>
                 <div style={{ padding: '2rem' }}>
@@ -82,7 +84,7 @@ const ClusterManager = ({ onClose, initialCluster = null }) => {
                         {/* Basic Info Grid */}
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
                             <div className="form-field">
-                                <label>Name</label>
+                                <label>{t('dynasty.clusterName')}</label>
                                 <input
                                     required
                                     value={formData.name}
@@ -91,19 +93,19 @@ const ClusterManager = ({ onClose, initialCluster = null }) => {
                                 />
                             </div>
                             <div className="form-field">
-                                <label>Type</label>
+                                <label>{t('dynasty.clusterType')}</label>
                                 <select
                                     value={formData.type}
                                     onChange={e => setFormData({ ...formData, type: e.target.value })}
                                 >
-                                    <option value={ClusterType.DYNASTY}>Dynasty</option>
-                                    <option value={ClusterType.SURNAME}>Surname Group</option>
-                                    <option value={ClusterType.GEOGRAPHIC}>Geographic Cluster</option>
-                                    <option value={ClusterType.GENETIC}>Genetic Match Group</option>
+                                    <option value={ClusterType.DYNASTY}>{t('dynasty.dynastyType')}</option>
+                                    <option value={ClusterType.SURNAME}>{t('dynasty.surnameGroup')}</option>
+                                    <option value={ClusterType.GEOGRAPHIC}>{t('dynasty.geographicCluster')}</option>
+                                    <option value={ClusterType.GENETIC}>{t('dynasty.geneticMatchGroup')}</option>
                                 </select>
                             </div>
                             <div className="form-field">
-                                <label>Color Coding</label>
+                                <label>{t('dynasty.colorCoding')}</label>
                                 <input
                                     type="color"
                                     value={formData.color}
@@ -112,7 +114,7 @@ const ClusterManager = ({ onClose, initialCluster = null }) => {
                                 />
                             </div>
                             <div className="form-field">
-                                <label>Description (Optional)</label>
+                                <label>{t('dynasty.description')}</label>
                                 <input
                                     value={formData.description}
                                     onChange={e => setFormData({ ...formData, description: e.target.value })}
@@ -125,27 +127,27 @@ const ClusterManager = ({ onClose, initialCluster = null }) => {
                         {formData.type === ClusterType.DYNASTY && (
                             <div className="dynasty-rules-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', background: 'rgba(255,255,255,0.02)', padding: '1rem', borderRadius: '0.75rem', marginBottom: '1.5rem' }}>
                                 <div className="form-field">
-                                    <label>Inheritance Rule</label>
+                                    <label>{t('dynasty.inheritanceRule')}</label>
                                     <select
                                         value={formData.inheritance}
                                         onChange={e => setFormData({ ...formData, inheritance: e.target.value })}
                                     >
-                                        <option value={InheritanceType.COGNATIC}>Cognatic (Mixed)</option>
-                                        <option value={InheritanceType.AGNATIC}>Agnatic (Male-line)</option>
+                                        <option value={InheritanceType.COGNATIC}>{t('dynasty.cognatic')}</option>
+                                        <option value={InheritanceType.AGNATIC}>{t('dynasty.agnatic')}</option>
                                     </select>
                                 </div>
                                 <div className="form-field">
-                                    <label>Succession Law</label>
+                                    <label>{t('dynasty.successionLaw')}</label>
                                     <select
                                         value={formData.successionLaw}
                                         onChange={e => setFormData({ ...formData, successionLaw: e.target.value })}
                                     >
-                                        <option value={SuccessionLaw.PRIMOGENITURE_ABSOLUTE}>Absolute Primogeniture</option>
-                                        <option value={SuccessionLaw.PRIMOGENITURE_MALE_PREFERENCE}>Male-preference</option>
+                                        <option value={SuccessionLaw.PRIMOGENITURE_ABSOLUTE}>{t('dynasty.primogeniture')}</option>
+                                        <option value={SuccessionLaw.PRIMOGENITURE_MALE_PREFERENCE}>{t('dynasty.primogeniturePreference')}</option>
                                     </select>
                                 </div>
                                 <div className="form-field">
-                                    <label>Defining Root Ancestor</label>
+                                    <label>{t('dynasty.definingRootAncestor')}</label>
                                     <select
                                         value={formData.definingAncestorId}
                                         onChange={e => setFormData({ ...formData, definingAncestorId: e.target.value })}
