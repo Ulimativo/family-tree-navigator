@@ -794,10 +794,95 @@
     color: var(--primary-color);
 }
 
+/* Header Layout */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: 0;
+    flex: 1;
+}
+
+.header-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    position: relative;
+}
+
+/* Export Dropdown */
+.export-dropdown-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.btn-export {
+    white-space: nowrap;
+}
+
+.export-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow-lg);
+    z-index: 200;
+    min-width: 160px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-item {
+    width: 100%;
+    text-align: left;
+    padding: 0.6rem 1rem;
+    background: none;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+    border-radius: 0.3rem;
+    transition: background 0.2s;
+    font-size: 0.9rem;
+}
+
+.dropdown-item:hover {
+    background: var(--bg-dark);
+    color: var(--primary-color);
+}
+
 /* ===== RESPONSIVE DESIGN - MOBILE & TABLET ===== */
 
 /* Tablet Breakpoint: 768px and below */
 @media (max-width: 768px) {
+    .header-left {
+        gap: 0.75rem;
+    }
+
+    .header-left h1 {
+        font-size: 1.1rem;
+    }
+
+    .header-actions {
+        gap: 0.5rem;
+    }
+
+    .btn-secondary,
+    .btn-export {
+        padding: 0.5rem 0.9rem;
+        font-size: 0.85rem;
+    }
+
+    .export-dropdown-menu {
+        min-width: 150px;
+    }
+
     .sidebar {
         width: 260px;
     }
@@ -877,8 +962,49 @@
     }
 
     .app-header {
-        padding: 0 0.75rem;
+        padding: 0 0.5rem;
         height: 52px;
+        gap: 0.5rem;
+    }
+
+    .header-left {
+        gap: 0.5rem;
+        flex: 0 1 auto;
+        overflow: hidden;
+    }
+
+    .header-left h1 {
+        font-size: 0.95rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex-shrink: 1;
+    }
+
+    .header-actions {
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .btn-secondary {
+        display: none;
+    }
+
+    .btn-export {
+        padding: 0.45rem 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    .export-dropdown-menu {
+        min-width: 140px;
+        right: -10px;
+        max-width: calc(100vw - 20px);
+    }
+
+    .dropdown-item {
+        padding: 0.5rem 0.85rem;
+        font-size: 0.85rem;
     }
 
     .app-header h1 {
@@ -1148,8 +1274,39 @@
 /* Small Mobile Breakpoint: 480px and below */
 @media (max-width: 480px) {
     .app-header {
-        padding: 0 0.5rem;
+        padding: 0 0.4rem;
         height: 48px;
+        gap: 0.3rem;
+    }
+
+    .header-left {
+        gap: 0.3rem;
+    }
+
+    .header-left h1 {
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .header-actions {
+        gap: 0.3rem;
+    }
+
+    .btn-export {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.75rem;
+    }
+
+    .export-dropdown-menu {
+        min-width: 130px;
+        right: -5px;
+    }
+
+    .dropdown-item {
+        padding: 0.45rem 0.75rem;
+        font-size: 0.8rem;
     }
 
     .app-header h1 {

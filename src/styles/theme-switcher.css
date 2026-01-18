@@ -20,6 +20,28 @@
     box-shadow: var(--shadow-md);
     z-index: 1000;
     animation: fadeIn 0.2s ease-out;
+    max-width: calc(100vw - 16px);
+}
+
+@media (max-width: 768px) {
+    .theme-menu {
+        min-width: 200px;
+    }
+}
+
+@media (max-width: 640px) {
+    .theme-menu {
+        min-width: 180px;
+        right: -10px;
+        max-width: calc(100vw - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .theme-menu {
+        min-width: 160px;
+        right: -5px;
+    }
 }
 
 .theme-menu-title {

@@ -165,7 +165,7 @@ const AppContent = () => {
                 />
             )}
             <header className="app-header">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <div className="header-left">
                     <h1>{t('header.title')}</h1>
                     <ThemeSwitcher />
                     <LanguageSelector />
@@ -184,7 +184,7 @@ const AppContent = () => {
                         <Layers size={20} />
                     </button>
                 </div>
-                <div className="header-actions" style={{ display: 'flex', gap: '0.75rem', position: 'relative' }}>
+                <div className="header-actions">
                     <input
                         type="file"
                         id="gedcom-upload"
@@ -200,25 +200,24 @@ const AppContent = () => {
                     </button>
 
                     {data && (
-                        <div style={{ position: 'relative' }}>
+                        <div className="export-dropdown-container">
                             <button
-                                className="btn-primary"
+                                className="btn-primary btn-export"
                                 onClick={() => setShowExportDropdown(!showExportDropdown)}
+                                title={t('header.export')}
                             >
                                 {t('header.export')}
                             </button>
                             {showExportDropdown && (
-                                <div className="dropdown-menu" style={{ position: 'absolute', top: '100%', right: 0, marginTop: '0.5rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '0.5rem', boxShadow: 'var(--shadow-lg)', zIndex: 200, minWidth: '160px', padding: '0.5rem' }}>
+                                <div className="export-dropdown-menu">
                                     <button
                                         className="dropdown-item"
-                                        style={{ width: '100%', textAlign: 'left', padding: '0.6rem 1rem', background: 'none', border: 'none', color: 'var(--text-main)', cursor: 'pointer', borderRadius: '0.3rem' }}
                                         onClick={() => handleExport('json')}
                                     >
                                         {t('export.exportJson')}
                                     </button>
                                     <button
                                         className="dropdown-item"
-                                        style={{ width: '100%', textAlign: 'left', padding: '0.6rem 1rem', background: 'none', border: 'none', color: 'var(--text-main)', cursor: 'pointer', borderRadius: '0.3rem' }}
                                         onClick={() => handleExport('gedcom')}
                                     >
                                         {t('export.exportGedcom')}
