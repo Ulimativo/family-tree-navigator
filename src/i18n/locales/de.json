@@ -14,7 +14,8 @@
     "warning": "Warnung",
     "confirm": "Bestätigen",
     "expand": "Seitenleiste erweitern",
-    "collapse": "Seitenleiste ausblenden"
+    "collapse": "Seitenleiste ausblenden",
+    "optional": "optional"
   },
   "header": {
     "title": "Family Tree Navigator",
@@ -56,6 +57,7 @@
     "title": "Profil",
     "name": "Name",
     "given": "Vorname",
+    "givenName": "Vorname",
     "surname": "Nachname",
     "prefix": "Präfix",
     "suffix": "Suffix",
@@ -94,7 +96,19 @@
     "deleteEventConfirm": "Wirklich dieses Ereignis löschen?",
     "confirm": "Bestätigen",
     "yes": "Ja",
-    "no": "Nein"
+    "no": "Nein",
+    "sex": "Geschlecht",
+    "sexMale": "Männlich",
+    "sexFemale": "Weiblich",
+    "sexUnknown": "Unbekannt",
+    "birthDate": "Geburtsdatum",
+    "birthPlace": "Geburtsort",
+    "deathDate": "Sterbedatum",
+    "deathPlace": "Sterbeort",
+    "dateFormatHint": "z.B. 1. JAN 1900",
+    "validationRequired": "Mindestens ein Vorname oder Nachname erforderlich",
+    "validationInvalidDate": "Ungültiges Datumformat (verwenden Sie: T. MMM JJJJ oder MMM JJJJ)",
+    "media": "Fotos & Medien"
   },
   "welcome": {
     "title": "Entdecken Sie Ihr Familienerbe",

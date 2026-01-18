@@ -14,7 +14,8 @@
     "warning": "Warning",
     "confirm": "Confirm",
     "expand": "Expand Sidebar",
-    "collapse": "Collapse Sidebar"
+    "collapse": "Collapse Sidebar",
+    "optional": "optional"
   },
   "header": {
     "title": "Family Tree Navigator",
@@ -56,6 +57,7 @@
     "title": "Profile",
     "name": "Name",
     "given": "Given Name",
+    "givenName": "Given Name",
     "surname": "Surname",
     "prefix": "Prefix",
     "suffix": "Suffix",
@@ -94,7 +96,19 @@
     "deleteEventConfirm": "Are you sure you want to delete this event?",
     "confirm": "Confirm",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "sex": "Sex",
+    "sexMale": "Male",
+    "sexFemale": "Female",
+    "sexUnknown": "Unknown",
+    "birthDate": "Birth Date",
+    "birthPlace": "Birth Place",
+    "deathDate": "Death Date",
+    "deathPlace": "Death Place",
+    "dateFormatHint": "e.g., 1 JAN 1900",
+    "validationRequired": "At least given name or surname is required",
+    "validationInvalidDate": "Invalid date format (use: D MMM YYYY or MMM YYYY)",
+    "media": "Photos & Media"
   },
   "welcome": {
     "title": "Discover Your Family Legacy",
