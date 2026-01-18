@@ -67,7 +67,7 @@
 
 .toggle-sidebar:hover {
     color: var(--primary-color);
-    background: white;
+    background: var(--bg-dark);
 }
 
 .sidebar-header {
@@ -101,8 +101,8 @@
 
 .search-container input:focus {
     border-color: var(--primary-color);
-    background: white;
-    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+    background: var(--bg-card);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-color) 10%, transparent);
 }
 
 .filter-toggle {
@@ -220,9 +220,8 @@
 }
 
 .person-item.active {
-    background: rgba(37, 99, 235, 0.05);
-    /* very light blue */
-    border-color: rgba(37, 99, 235, 0.2);
+    background: color-mix(in srgb, var(--primary-color) 5%, transparent);
+    border-color: color-mix(in srgb, var(--primary-color) 20%, transparent);
 }
 
 .item-info {
@@ -332,8 +331,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+    color: var(--bg-card);
+    box-shadow: var(--shadow-md);
 }
 
 .title-text {
@@ -360,11 +359,11 @@
 }
 
 .profile-section {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--bg-dark);
     padding: 1.25rem;
-    border-radius: 1rem;
+    border-radius: var(--radius-xl, 1rem);
     margin-bottom: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
 }
 
 .profile-section h3 {
@@ -380,23 +379,23 @@
 }
 
 .event-item {
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--bg-card);
     padding: 1rem;
-    border-radius: 0.75rem;
+    border-radius: var(--radius-lg, 0.75rem);
     margin-bottom: 0.75rem;
     display: flex;
     gap: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
 }
 
 .event-tag {
     background: var(--primary-color);
     padding: 0.3rem 0.6rem;
-    border-radius: 0.4rem;
+    border-radius: var(--radius-sm, 0.4rem);
     font-size: 0.7rem;
     font-weight: 700;
     height: fit-content;
-    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+    box-shadow: var(--shadow-sm);
 }
 
 .event-details {
@@ -436,15 +435,17 @@
     align-items: center;
     gap: 1rem;
     padding: 0.85rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 0.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg, 0.75rem);
     margin-bottom: 0.6rem;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .relationship-card:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--bg-dark);
+    border-color: var(--border-dark);
     transform: translateX(5px);
 }
 
@@ -478,8 +479,8 @@
 }
 
 .btn-icon:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+    background: var(--bg-dark);
+    color: var(--primary-color);
 }
 
 /* Import Modal Styles */
@@ -537,20 +538,21 @@
 .tier-card:hover {
     transform: translateY(-4px);
     border-color: var(--primary-color);
-    background: rgba(37, 99, 235, 0.05);
+    background: color-mix(in srgb, var(--primary-color) 5%, var(--bg-dark));
 }
 
 .tier-card.active {
     border-color: var(--primary-color);
-    background: rgba(37, 99, 235, 0.1);
-    box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.2);
+    background: color-mix(in srgb, var(--primary-color) 10%, var(--bg-dark));
+    box-shadow: var(--shadow-lg);
 }
 
 .tier-icon {
     width: 48px;
     height: 48px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 0.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg, 0.75rem);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -597,4 +599,197 @@
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
+}
+
+/* Classic Theme - Comprehensive Form & Component Styling */
+
+/* Search and input fields */
+[data-theme="classic"] .search-container input {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    box-shadow: var(--shadow-inset);
+}
+
+[data-theme="classic"] .search-container input:focus {
+    background: var(--bg-card);
+    border-color: var(--border-ornate);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 10%, transparent);
+}
+
+/* Filter panel and form fields */
+[data-theme="classic"] .filters-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    box-shadow: var(--shadow-sm), var(--shadow-inset);
+}
+
+[data-theme="classic"] .filter-group select,
+[data-theme="classic"] .range-inputs input {
+    background: var(--bg-dark);
+    border: 1px solid var(--border-dark);
+    box-shadow: var(--shadow-inset);
+}
+
+[data-theme="classic"] .filter-group select:focus,
+[data-theme="classic"] .range-inputs input:focus {
+    border-color: var(--border-ornate);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-color) 10%, transparent);
+}
+
+[data-theme="classic"] .filter-group label {
+    color: var(--text-secondary);
+    font-family: var(--font-family-ui);
+}
+
+/* Person list items */
+[data-theme="classic"] .person-item {
+    border: 1px solid transparent;
+}
+
+[data-theme="classic"] .person-item:hover {
+    background: var(--bg-dark);
+    border-color: var(--border);
+}
+
+[data-theme="classic"] .person-item.active {
+    background: color-mix(in srgb, var(--primary-color) 8%, var(--bg-card));
+    border-color: var(--border-ornate);
+    box-shadow: var(--shadow-sm), inset 0 1px 0 var(--emboss-highlight);
+}
+
+/* Profile sections */
+[data-theme="classic"] .profile-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    box-shadow: var(--shadow-sm), var(--shadow-inset);
+}
+
+[data-theme="classic"] .profile-section h3 {
+    color: var(--text-secondary);
+    font-family: var(--font-family-ui);
+    letter-spacing: 0.08em;
+}
+
+/* Event and relationship cards */
+[data-theme="classic"] .event-item {
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="classic"] .relationship-card {
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="classic"] .relationship-card:hover {
+    background: var(--bg-card);
+    border-color: var(--border-ornate);
+    box-shadow: var(--shadow-md);
+}
+
+/* Sidebar styling */
+[data-theme="classic"] .sidebar {
+    background: var(--bg-card);
+    border-right: 2px solid var(--border-dark);
+    box-shadow: var(--shadow-md);
+}
+
+[data-theme="classic"] .sidebar-header {
+    border-bottom: 2px solid var(--border-dark);
+    background: linear-gradient(to bottom, var(--bg-card), var(--bg-dark));
+}
+
+[data-theme="classic"] .app-header {
+    background: var(--bg-card);
+    border-bottom: 2px solid var(--border-dark);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="classic"] .toggle-sidebar {
+    background: var(--bg-card);
+    border: 2px solid var(--border-dark);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="classic"] .toggle-sidebar:hover {
+    border-color: var(--border-ornate);
+    background: var(--bg-dark);
+}
+
+/* Profile panel */
+[data-theme="classic"] .profile-panel {
+    background: var(--bg-card);
+    border-left: 2px solid var(--border-dark);
+    box-shadow: var(--shadow-lg);
+}
+
+[data-theme="classic"] .profile-header {
+    border-bottom: 2px solid var(--border-dark);
+    background: linear-gradient(to bottom, var(--bg-card), var(--bg-dark));
+}
+
+[data-theme="classic"] .avatar {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent));
+    border: 2px solid var(--border-ornate);
+    box-shadow: var(--shadow-md), inset 0 1px 0 var(--emboss-highlight);
+}
+
+/* Import modal */
+[data-theme="classic"] .import-modal {
+    background: var(--bg-card);
+    border: 2px solid var(--border-dark);
+    box-shadow: var(--shadow-lg);
+}
+
+[data-theme="classic"] .tier-card {
+    background: var(--bg-dark);
+    border: 2px solid var(--border);
+    box-shadow: var(--shadow-sm), var(--shadow-inset);
+}
+
+[data-theme="classic"] .tier-card:hover {
+    border-color: var(--border-ornate);
+    background: var(--bg-card);
+}
+
+[data-theme="classic"] .tier-card.active {
+    border-color: var(--border-ornate);
+    background: color-mix(in srgb, var(--primary-color) 10%, var(--bg-card));
+    box-shadow: var(--shadow-md), inset 0 1px 0 var(--emboss-highlight);
+}
+
+[data-theme="classic"] .tier-icon {
+    background: linear-gradient(135deg, var(--bg-card), var(--bg-dark));
+    border: 1px solid var(--border-ornate);
+}
+
+/* Small text and helper text */
+[data-theme="classic"] small,
+[data-theme="classic"] .text-muted {
+    color: var(--text-muted);
+    font-family: var(--font-family-ui);
+}
+
+/* Filter toggle button */
+[data-theme="classic"] .filter-toggle {
+    border: 1px solid var(--border-dark);
+    background: var(--bg-card);
+}
+
+[data-theme="classic"] .filter-toggle:hover,
+[data-theme="classic"] .filter-toggle.active {
+    background: var(--bg-dark);
+    border-color: var(--border-ornate);
+}
+
+/* Icon buttons */
+[data-theme="classic"] .btn-icon {
+    transition: all 0.2s ease;
+}
+
+[data-theme="classic"] .btn-icon:hover {
+    background: color-mix(in srgb, var(--primary-color) 10%, transparent);
+    color: var(--primary-color);
 }

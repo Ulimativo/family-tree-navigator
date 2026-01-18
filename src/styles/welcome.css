@@ -114,3 +114,76 @@
         padding: 0.75rem 1.5rem;
     }
 }
+
+/* Classic Theme - Heritage Welcome Screen */
+[data-theme="classic"] .welcome-title {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    font-family: var(--font-family-headings);
+}
+
+[data-theme="classic"] .feature-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm), var(--shadow-inset);
+    transition: all 0.3s ease;
+}
+
+[data-theme="classic"] .feature-card:hover {
+    transform: translateY(-3px) rotate(0.3deg);
+    border-color: var(--border-ornate);
+    box-shadow: var(--shadow-md);
+}
+
+[data-theme="classic"] .feature-icon {
+    color: var(--primary-color);
+    filter: drop-shadow(0 2px 4px var(--emboss-shadow));
+}
+
+[data-theme="classic"] .cta-box {
+    background: var(--bg-card);
+    border: 2px solid var(--border-dark);
+    box-shadow: var(--shadow-md);
+    position: relative;
+}
+
+/* Ornamental corners for CTA box */
+[data-theme="classic"] .cta-box::before,
+[data-theme="classic"] .cta-box::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+}
+
+[data-theme="classic"] .cta-box::before {
+    top: -2px;
+    left: -2px;
+    border-top: 3px solid var(--border-ornate);
+    border-left: 3px solid var(--border-ornate);
+}
+
+[data-theme="classic"] .cta-box::after {
+    bottom: -2px;
+    right: -2px;
+    border-bottom: 3px solid var(--border-ornate);
+    border-right: 3px solid var(--border-ornate);
+}
+
+[data-theme="classic"] .cta-button {
+    background: linear-gradient(to bottom, var(--primary-color), var(--primary-hover));
+    border: 1px solid var(--border-ornate);
+    box-shadow: var(--shadow-sm), inset 0 1px 0 var(--emboss-highlight);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    font-family: var(--font-family-ui);
+    font-weight: 600;
+}
+
+[data-theme="classic"] .cta-button:hover {
+    background: linear-gradient(to bottom, var(--primary-hover), var(--accent-secondary));
+    box-shadow: var(--shadow-md), inset 0 1px 0 var(--emboss-highlight);
+    transform: translateY(-1px);
+}

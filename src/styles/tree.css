@@ -2,8 +2,26 @@
     width: 100%;
     height: 100%;
     position: relative;
-    background: radial-gradient(circle at center, #ffffff 0%, #f1f5f9 100%);
+    background: var(--bg-card);
     cursor: grab;
+}
+
+/* Classic Theme - Parchment Background */
+[data-theme="classic"] .tree-container {
+    background: radial-gradient(ellipse at center, var(--bg-card) 0%, var(--bg-dark) 100%);
+    position: relative;
+}
+
+/* Subtle paper texture overlay for classic theme */
+[data-theme="classic"] .tree-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(133, 77, 14, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(133, 77, 14, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    opacity: 0.6;
 }
 
 .tree-container:active {
@@ -25,13 +43,11 @@
 }
 
 .node.female circle {
-    stroke: #ec4899;
-    /* Pink-500 */
+    stroke: var(--gender-female, #ec4899);
 }
 
 .node.male circle {
-    stroke: #0ea5e9;
-    /* Sky-500 */
+    stroke: var(--gender-male, #0ea5e9);
 }
 
 .node.focal circle {
@@ -44,8 +60,14 @@
 .link {
     transition: all 0.5s ease;
     opacity: 0.4;
-    stroke: #cbd5e1;
-    /* Slate-300 */
+    stroke: var(--border-dark, #cbd5e1);
+}
+
+/* Classic theme - Ink-style connections */
+[data-theme="classic"] .link {
+    stroke: var(--text-muted);
+    opacity: 0.3;
+    stroke-width: 1.5px;
 }
 
 .node text {
@@ -62,4 +84,27 @@
 
 .zoom-container {
     transition: transform 0.1s ease-out;
+}
+
+/* Classic Theme - Heritage Node Styling */
+[data-theme="classic"] .node circle {
+    filter: drop-shadow(0 2px 6px var(--emboss-shadow));
+}
+
+[data-theme="classic"] .node:hover circle {
+    filter: drop-shadow(0 3px 8px var(--emboss-shadow));
+}
+
+[data-theme="classic"] .node.focal circle {
+    fill: var(--primary-color);
+    stroke: var(--bg-card);
+    stroke-width: 3px;
+    filter: drop-shadow(0 4px 12px var(--emboss-shadow)) drop-shadow(0 0 8px var(--primary-light));
+}
+
+/* Heritage text styling */
+[data-theme="classic"] .node text {
+    fill: var(--text-main);
+    text-shadow: 0 1px 2px var(--bg-card);
+    font-weight: 600;
 }

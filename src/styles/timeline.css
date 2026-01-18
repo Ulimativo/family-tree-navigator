@@ -23,27 +23,26 @@
     top: 0.35rem;
     width: 0.75rem;
     height: 0.75rem;
-    background: white;
+    background: var(--bg-card);
     border: 2px solid var(--primary-color);
     border-radius: 50%;
     z-index: 1;
-    box-shadow: 0 0 0 2px white;
-    /* Cleaner separation from line */
+    box-shadow: 0 0 0 2px var(--bg-card);
 }
 
 .timeline-content {
     display: flex;
     flex-direction: column;
-    background: white;
+    background: var(--bg-card);
     padding: 0.75rem 1rem;
-    border-radius: 0.6rem;
+    border-radius: var(--radius-md, 0.6rem);
     border: 1px solid var(--border);
     transition: all 0.2s;
     box-shadow: var(--shadow-sm);
 }
 
 .timeline-container.editable .timeline-item:hover .timeline-content {
-    background: #f8fafc;
+    background: var(--bg-dark);
     border-color: var(--primary-color);
     transform: translateX(2px);
     box-shadow: var(--shadow-md);
@@ -103,13 +102,13 @@
 }
 
 .btn-tiny:hover {
-    background: rgba(37, 99, 235, 0.1);
+    background: color-mix(in srgb, var(--primary-color) 10%, transparent);
     color: var(--primary-color);
 }
 
 .btn-tiny.danger:hover {
-    background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
+    background: color-mix(in srgb, var(--accent-burgundy, #ef4444) 10%, transparent);
+    color: var(--accent-burgundy, #ef4444);
 }
 
 .timeline-empty {
@@ -118,4 +117,33 @@
     color: var(--text-muted);
     font-style: italic;
     font-size: 0.9rem;
+}
+
+/* Classic Theme - Manuscript Timeline Styling */
+[data-theme="classic"] .timeline-container {
+    border-left-color: var(--border-ornate);
+    border-left-width: 2.5px;
+}
+
+[data-theme="classic"] .timeline-dot {
+    background: radial-gradient(circle, var(--primary-light) 0%, var(--primary-color) 100%);
+    border-color: var(--border-ornate);
+    border-width: 2.5px;
+    box-shadow: 0 0 0 3px var(--bg-card), var(--shadow-sm);
+}
+
+[data-theme="classic"] .timeline-content {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm), var(--shadow-inset);
+}
+
+[data-theme="classic"] .timeline-date {
+    color: var(--text-main);
+    font-variant-numeric: oldstyle-nums;
+}
+
+[data-theme="classic"] .timeline-tag {
+    color: var(--primary-color);
+    letter-spacing: 0.05em;
 }

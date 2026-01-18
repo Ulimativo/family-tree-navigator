@@ -10,7 +10,7 @@
 
 .edit-input-title:focus {
     border-color: var(--primary-color);
-    outline: 2px solid rgba(37, 99, 235, 0.1);
+    outline: 2px solid color-mix(in srgb, var(--primary-color) 10%, transparent);
 }
 
 .header-actions {
@@ -20,11 +20,11 @@
 
 .btn-icon.primary {
     color: var(--primary-color);
-    background: rgba(37, 99, 235, 0.1);
+    background: color-mix(in srgb, var(--primary-color) 10%, transparent);
 }
 
 .btn-icon.primary:hover {
-    background: rgba(37, 99, 235, 0.2);
+    background: color-mix(in srgb, var(--primary-color) 20%, transparent);
 }
 
 .actions-bar {
@@ -34,7 +34,7 @@
 }
 
 .btn-action {
-    background: white;
+    background: var(--bg-card);
     border: 1px solid var(--border);
     color: var(--text-main);
     padding: 0.6rem 1.2rem;
@@ -60,7 +60,7 @@
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
-    background: white;
+    background: var(--bg-card);
     padding: 1rem;
     border-radius: 0.75rem;
     border: 1px solid var(--border);
@@ -101,7 +101,7 @@
 }
 
 .btn-add-event {
-    background: white;
+    background: var(--bg-card);
     border: 1px solid var(--border);
     color: var(--primary-color);
     padding: 0.3rem 0.6rem;
@@ -116,11 +116,11 @@
 
 .btn-add-event:hover {
     border-color: var(--primary-color);
-    background: rgba(37, 99, 235, 0.05);
+    background: color-mix(in srgb, var(--primary-color) 5%, transparent);
 }
 
 .event-editor-card {
-    background: white;
+    background: var(--bg-card);
     border: 1px solid var(--border);
     padding: 1rem;
     border-radius: 0.5rem;
@@ -233,12 +233,12 @@
 
 .btn-row:hover {
     color: var(--primary-color);
-    background: rgba(37, 99, 235, 0.1);
+    background: color-mix(in srgb, var(--primary-color) 10%, transparent);
 }
 
 .btn-row.danger:hover {
-    color: #ef4444;
-    background: rgba(239, 68, 68, 0.1);
+    color: var(--accent-burgundy, #ef4444);
+    background: color-mix(in srgb, var(--accent-burgundy, #ef4444) 10%, transparent);
 }
 
 .attributes-grid {
@@ -285,8 +285,74 @@
     font-size: 0.7rem;
     color: var(--text-muted);
     margin-top: 0.3rem;
-    background: rgba(0, 0, 0, 0.05);
+    background: var(--bg-dark);
     padding: 0.2rem 0.4rem;
-    border-radius: 0.2rem;
+    border-radius: var(--radius-sm, 0.2rem);
     width: fit-content;
+}
+
+/* Classic Theme - Heritage Profile Form Styling */
+[data-theme="classic"] .edit-input-title {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    box-shadow: var(--shadow-inset);
+    font-family: var(--font-family-ui);
+}
+
+[data-theme="classic"] .edit-input-title:focus {
+    border-color: var(--border-ornate);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 10%, transparent);
+}
+
+[data-theme="classic"] .event-editor-card select,
+[data-theme="classic"] .event-editor-card input {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    box-shadow: var(--shadow-inset);
+    font-family: var(--font-family-ui);
+}
+
+[data-theme="classic"] .event-editor-card select:focus,
+[data-theme="classic"] .event-editor-card input:focus {
+    border-color: var(--border-ornate);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-color) 10%, transparent);
+}
+
+[data-theme="classic"] .event-editor-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    box-shadow: var(--shadow-sm), var(--shadow-inset);
+}
+
+[data-theme="classic"] .add-menu {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    box-shadow: var(--shadow-md);
+}
+
+[data-theme="classic"] .btn-action {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="classic"] .btn-action:hover {
+    background: var(--bg-dark);
+    border-color: var(--border-ornate);
+}
+
+[data-theme="classic"] .attribute-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="classic"] .attribute-item:hover {
+    border-color: var(--border-ornate);
+    box-shadow: var(--shadow-md);
+}
+
+[data-theme="classic"] .timeline-note-inline {
+    background: color-mix(in srgb, var(--text-main) 5%, var(--bg-dark));
+    border: 1px solid var(--border);
 }

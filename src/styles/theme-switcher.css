@@ -54,8 +54,7 @@
 }
 
 .theme-option.active {
-    background: rgba(37, 99, 235, 0.05);
-    /* subtle primary tint */
+    background: color-mix(in srgb, var(--primary-color) 5%, transparent);
     color: var(--primary-color);
     font-weight: 500;
 }
@@ -92,4 +91,35 @@
 .check-icon {
     margin-left: auto;
     color: var(--primary-color);
+}
+
+/* Classic Theme Styling */
+[data-theme="classic"] .theme-menu {
+    background: var(--bg-card);
+    border: 2px solid var(--border-dark);
+    box-shadow: var(--shadow-lg);
+}
+
+[data-theme="classic"] .theme-menu-title {
+    border-bottom: 1px solid var(--border-dark);
+    color: var(--text-secondary);
+    font-family: var(--font-family-ui);
+}
+
+[data-theme="classic"] .theme-option {
+    border-radius: var(--radius-md);
+}
+
+[data-theme="classic"] .theme-option:hover {
+    background: var(--bg-dark);
+}
+
+[data-theme="classic"] .theme-option.active {
+    background: color-mix(in srgb, var(--primary-color) 10%, var(--bg-card));
+    box-shadow: var(--shadow-sm), inset 0 1px 0 var(--emboss-highlight);
+}
+
+[data-theme="classic"] .theme-color-preview {
+    border: 2px solid var(--border-ornate);
+    box-shadow: var(--shadow-sm);
 }
