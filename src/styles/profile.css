@@ -1,0 +1,292 @@
+.edit-input-title {
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    font-size: 1.1rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    width: 100%;
+}
+
+.edit-input-title:focus {
+    border-color: var(--primary-color);
+    outline: 2px solid rgba(37, 99, 235, 0.1);
+}
+
+.header-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-icon.primary {
+    color: var(--primary-color);
+    background: rgba(37, 99, 235, 0.1);
+}
+
+.btn-icon.primary:hover {
+    background: rgba(37, 99, 235, 0.2);
+}
+
+.actions-bar {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-action {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-action:hover {
+    background: var(--bg-dark);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.add-menu {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    background: white;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+}
+
+.add-menu button {
+    background: var(--primary-color);
+    border: none;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.2s;
+}
+
+.add-menu button:hover {
+    background: var(--primary-hover);
+}
+
+.add-menu button.cancel {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+}
+
+.add-menu button.cancel:hover {
+    background: var(--bg-dark);
+    color: var(--text-main);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.btn-add-event {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--primary-color);
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.4rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: all 0.2s;
+}
+
+.btn-add-event:hover {
+    border-color: var(--primary-color);
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.event-editor-card {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.event-editor-card select,
+.event-editor-card input {
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    font-size: 0.85rem;
+}
+
+.editor-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.btn-save-event,
+.btn-cancel-event {
+    background: var(--primary-color);
+    border: none;
+    color: white;
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+}
+
+.btn-save-event:hover {
+    background: var(--primary-hover);
+}
+
+.btn-cancel-event {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+}
+
+.btn-cancel-event:hover {
+    background: var(--bg-dark);
+    color: var(--text-main);
+}
+
+.event-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 0.4rem;
+    transition: background 0.2s;
+}
+
+.event-row:hover {
+    background: var(--bg-dark);
+}
+
+.event-row.hidden {
+    display: none;
+}
+
+.event-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.event-tag {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.event-date {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.event-place {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.row-actions {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.btn-row {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.2rem;
+    border-radius: 0.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-row:hover {
+    color: var(--primary-color);
+    background: rgba(37, 99, 235, 0.1);
+}
+
+.btn-row.danger:hover {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.attributes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+}
+
+.attribute-item {
+    background: var(--bg-dark);
+    padding: 0.5rem;
+    border-radius: 0.4rem;
+    border: 1px solid var(--border);
+    transition: transform 0.2s, border-color 0.2s;
+    cursor: help;
+}
+
+.attribute-item:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary-color);
+}
+
+.attr-label {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+.attr-value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+    word-break: break-word;
+}
+
+.timeline-note-inline {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.2rem;
+    width: fit-content;
+}

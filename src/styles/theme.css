@@ -1,0 +1,103 @@
+/* Base Variables & Defaults (Modern Minimalist) */
+:root {
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  --bg-dark: #f8fafc;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --accent: #0ea5e9;
+  --border: #e2e8f0;
+  --glass: rgba(255, 255, 255, 0.8);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --border-radius: 0.5rem;
+}
+
+/* 1. Modern Minimalist (Explicit) */
+[data-theme="modern"] {
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  --bg-dark: #f8fafc;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --accent: #0ea5e9;
+  --border: #e2e8f0;
+  --glass: rgba(255, 255, 255, 0.8);
+}
+
+/* 2. Classic Parchment (Heritage) */
+[data-theme="classic"] {
+  --primary-color: #854d0e;
+  /* Antique Gold/Bronze */
+  --primary-hover: #713f12;
+  --bg-dark: #fdf6e3;
+  /* Cream/Parchment */
+  --bg-card: #fffbf0;
+  /* Lighter Cream */
+  --text-main: #292524;
+  /* Warm Black/Sepia */
+  --text-muted: #78716c;
+  /* Warm Gray */
+  --accent: #b45309;
+  /* Rust/Amber */
+  --border: #d6d3d1;
+  --glass: rgba(253, 246, 227, 0.9);
+}
+
+/* 3. Organic Roots (Nature) */
+[data-theme="organic"] {
+  --primary-color: #15803d;
+  /* Forest Green */
+  --primary-hover: #166534;
+  --bg-dark: #f0fdf4;
+  /* Very clear mint/white */
+  --bg-card: #ffffff;
+  --text-main: #14532d;
+  /* Dark Green Text */
+  --text-muted: #6b7280;
+  --accent: #a16207;
+  /* Earthy Brown/Yellow */
+  --border: #bbf7d0;
+  --glass: rgba(255, 255, 255, 0.8);
+}
+
+/* 4. Slate Professional (Neutral Dark) */
+[data-theme="slate"] {
+  --primary-color: #94a3b8;
+  /* Slate 400 */
+  --primary-hover: #cbd5e1;
+  --bg-dark: #0f172a;
+  /* Slate 900 */
+  --bg-card: #1e293b;
+  /* Slate 800 */
+  --text-main: #f1f5f9;
+  /* Slate 100 */
+  --text-muted: #94a3b8;
+  --accent: #38bdf8;
+  /* Sky Blue */
+  --border: #334155;
+  --glass: rgba(30, 41, 59, 0.8);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+}
+
+/* 5. Tokyo Noir (Cyberpunk/Original) */
+[data-theme="tokyo"] {
+  --primary-color: #6366f1;
+  /* Indigo */
+  --primary-hover: #4f46e5;
+  --bg-dark: #000000;
+  /* Pure Black */
+  --bg-card: #111111;
+  /* Near Black */
+  --text-main: #f8fafc;
+  --text-muted: #a1a1aa;
+  --accent: #d946ef;
+  /* Magenta Neon */
+  --border: #27272a;
+  --glass: rgba(17, 17, 17, 0.8);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.8);
+}

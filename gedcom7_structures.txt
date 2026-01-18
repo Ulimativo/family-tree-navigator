@@ -1,0 +1,759 @@
+The GEDCOM Standard                                                            7.0.0-rc1
+
+
+
+         ◦ not beginning with / (U+002F)
+         ◦ not containing any path segments equal to .. (U+002E U+002E)
+         ◦ not containing a reverse solidus character (U+005C \ ) or banned (p.7)
+           character, either directly or in escaped form
+         ◦ no query or fragment
+
+      refers to a local file. If the GEDCOM document is part of a GEDZIP (p.85), the
+      URL of the local file is a zip archive filename; otherwise, the URL of a local
+      file is resolved with base equal to the directory containing the GEDCOM file.
+
+  The meaning of a FILE (p.64) payload with any URL format not listed above is un‐
+  defined in GEDCOM 7.0, but may be defined in subsequent versions of GEDCOM.
+
+  FORM (Format)
+  The media type of the file referenced by the superstructure. This should be a
+  valid media type as defined by IETC BCP 13. A registry of media types is main‐
+  tained publicly by the IANA.
+
+  The FORM tag is also used in a context-defined way for two other structures:
+
+  HEAD . PLAC . FORM (Default place format)
+  Any PLAC (p.71) with no FORM shall be treated as if it has this FORM .
+
+  PLAC . FORM (Place format)
+  A comma-separated list of jurisdictional titles, which has the same number of
+  elements and in the same order as the PLAC structure. Entries should be in an
+  order where each is typically subsumed by the next.
+
+      Example — The following represents Baltimore, a city that is not within a
+      county.
+
+      2 PLAC Baltimore, , Maryland, USA
+      3 FORM City, County, State, Country
+
+
+  GEDC (Gedcom)
+  A container for information about the entire document.
+
+  It is recommended that applications write GEDC with its required subrecord
+  VERS (p.78) as the first substructure under HEAD .
+
+  GIVN (Given name)
+  A given or earned name used for official identification of a person.
+
+
+
+                                       Page 65 of 92
+The GEDCOM Standard                                                             7.0.0-rc1
+
+
+
+
+  HEAD (Header)
+  A pseudo-structure for storing metadata about the document. See The Header
+  and Trailer (p.13) for more.
+
+  HEIGHT
+  How many pixels to display vertically for the image. See CROP (p.60) for more.
+
+      Note — HEIGHT is a number of pixels. The correct tag for the height of an
+      individual is the DSCR (p.54) attribute.
+
+         Example —
+          0 @I45@ INDI
+          1 DSCR brown eyes, 5ft 10in, 198 pounds
+
+
+  HUSB (Husband)
+  A container for information relevant to the subject of the superstructure specif‐
+  ic to the individual described by the associated FAM (p.63)’s HUSB substructure.
+
+  The HUSB tag is also used in a context-defined way for one other structure:
+
+  FAM . HUSB
+  This is a partner in a FAM record. See FAMILY_RECORD (p.30) for more.
+
+  INDI (Individual)
+  See INDIVIDUAL_RECORD (p.32).
+
+  LANG (Language)
+  The human language of the superstructure. In the header, this provides the de‐
+  fault language for the entire document. In a SUBMITTER_RECORD (p.37), it provides
+  a language the subject of that record understands. Elsewhere it provides the
+  language in which the Text -typed payloads of superstructure and its substruc‐
+  tures appears.
+
+  The payload of LANG structure is a language tag, as defined by IETF BCP 47. A
+  registry of component subtags is maintained publicly by the IANA.
+
+
+
+
+                                     Page 66 of 92
+The GEDCOM Standard                                                          7.0.0-rc1
+
+
+
+
+  LATI (Latitude)
+  A latitudinal coordinate. The payload is either N (for a coordinate north of the
+  equator) or S (for a coordinate south of the equator) followed by a decimal
+  number of degrees. Minutes and seconds are not used and should be converted
+  to fractional degrees prior to encoding.
+
+      Example — 18 degrees, 9 minutes, and 3.4 seconds North would be
+      formatted as N18.150944 .
+
+  LEFT
+  Left is a number of pixels to not display from the left side of the image. See
+  CROP (p.60) for more.
+
+  LONG (Longitude)
+  A longitudinal coordinate. The payload is either E (for a coordinate east of the
+  prime meridian) or W (for a coordinate west of the prime meridian) followed
+  by a decimal number of degrees. Minutes and seconds are not used and should
+  be converted to fractional degrees prior to encoding.
+
+      Example — 168 degrees, 9 minutes, and 3.4 seconds East would be
+      formatted as E168.150944 .
+
+  MAP (Map)
+  A representative point for a location, as defined by LATI (p.67) and LONG sub‐
+  structures.
+
+  Note that MAP provides neither a notion of accuracy (for example, the MAP for a
+  birth event may be some distance from the point where the birth occurred) nor
+  a notion of region size (for example, the MAP for a place “Belarus” may be any‐
+  where within that nation’s 200,000 square kilometer area).
+
+  MEDI (Medium)
+  An enumerated value (p.79) providing information about the media or the medi‐
+  um in which information is stored.
+
+  MIME (Media type)
+  Indicates the media type of the payload of the superstructure, as defined by
+  IETC BCP 13.
+
+
+
+
+                                    Page 67 of 92
+The GEDCOM Standard                                                             7.0.0-rc1
+
+
+
+
+  Only 2 media types are supported by this structure in this version of GEDCOM:
+
+     • text/plain shall be presented to the user as-is, preserving all spacing, line
+       breaks, and so forth.
+
+     • text/html uses HTML tags to provide presentation information. Applica‐
+       tions should support at least the following:
+
+         ◦ p and br elements for paragraphing and line breaks.
+         ◦ b , i , and u elements for bold, italic, and underlined text (or
+           corresponding display in other locales; see HTML §4.5 for more).
+         ◦ sup and sub elements for super- and sub-script.
+         ◦ The 3 XML entities that appear in text: &amp; , &lt; &gt; . Note that
+           &quote; and &apos; are only needed in attributes. Other entities
+           should be represented as their respective Unicode characters instead.
+
+      Supporting more of HTML is encouraged. Unsupported elements should be
+      ignored during display.
+
+      Note — Media types are also used by external files, as described under
+      FORM (p.65) . External file media types are not limited to text/plain and
+      text/html .
+
+  NAME
+  The name of the superstructure’s subject, represented as a simple string.
+
+  The NAME tag is also used in a context-defined way for one other structure:
+
+  INDI . NAME
+  A PERSONAL_NAME_STRUCTURE (p.48) with parts, translations, sources, and so forth.
+
+  NICK (Nickname)
+  A descriptive or familiar name that is used instead of, or in addition to, one’s
+  proper name. Should only be used when a nickname is commonly written as
+  part of a full name; for stand-alone nicknames, a separate NAME with
+  TYPE NICK is more appropriate.
+
+  NO (Did not happen)
+  Identifies an event type which did not occur to the superstructure’s subject. See
+  NON_EVENT_STRUCTURE (p.46) for more.
+
+  The payload is a single event-type tag name. See Events (p.51).
+
+
+
+
+                                      Page 68 of 92
+The GEDCOM Standard                                                             7.0.0-rc1
+
+
+
+
+  NOTE
+  A NOTE_STRUCTURE (p.47), containing additional information provided by the sub‐
+  mitter for understanding the enclosing data.
+
+  The NOTE tag is also used in a context-defined way for one other structure:
+
+  CHAN . NOTE
+  Optional notes about the change made to the superstructure. May be describe
+  previous changes as well as the most recent, although only the most recent is
+  described by the CHAN . DATE .
+
+  NPFX (Name prefix)
+  Text which appears on a name line before the given and surname parts of a
+  name.
+
+  NSFX (Name suffix)
+  Text which appears on a name line after or behind the given and surname parts
+  of a name.
+
+  OBJE (Object)
+  An external file containing information pertinent to the subject of the super‐
+  structure if a substructure, or a description of such a file if a record. See
+  MULTIMEDIA_RECORD (p.33) and MULTIMEDIA_LINK (p.46) for more.
+
+  PAGE (Page)
+  A specific location within the information referenced. For a published work,
+  this could include the volume of a multi-volume work and the page number or
+  numbers. For a periodical, it could include volume, issue, and page numbers.
+  For a newspaper, it could include a date, page number, and column number. For
+  an unpublished source or microfilmed works, this could be a film or sheet num‐
+  ber, page number, or frame number. A census record might have an enumerat‐
+  ing district, page number, line number, dwelling number, and family number.
+
+  It is recommended that the data in this field be formatted comma-separated
+  with label: value pairs
+
+      Example —
+      2 SOUR @S1@
+      3 PAGE Film: 1234567, Frame: 344, Line: 28
+
+
+
+                                     Page 69 of 92
+The GEDCOM Standard                                                           7.0.0-rc1
+
+
+
+
+  PEDI (Pedigree)
+  An enumerated value (p.80) indicating the type of child-to-family relationship
+  represented by the superstructure.
+
+  PHON (Phone)
+  A telephone number. Telephone numbers have many regional variations and
+  may contain non-digit characters. Users should be encouraged to use interna‐
+  tionalized telephone numbers rather than local versions. As a starting point for
+  this recommendation, there are international standards that use a ‘+’ shorthand
+  for the international prefix (for example, in place of 011 in the US or 00 in the
+  UK). Examples are +1 (555) 555-1234 (US) or +44 20 1234 1234 (UK).
+  See ITU standards E.123 and E.164 for more information.
+
+  PHRASE
+  Textual information that cannot be expressed in the superstructure due to the
+  limitations of its datatype.
+
+      Example — A date interpreted from the phrase “The Feast of St John”
+      might be
+
+      2 DATE 24 JUNE 1852
+      3 PHRASE During the feast of St John
+
+      Example — A record using 1648/9 to indicate a change in new year
+      might become
+
+      2 DATE 30 JAN 1649
+      3 PHRASE 30th of January, 1648/9
+
+      Example — A record using 1648/9 to indicate uncertainty in the year
+      might become
+
+      2 DATE BET 1648 AND 1649
+      3 PHRASE 1648/9
+
+      Example — A record using Q1 1867 to indicate an event occurred some‐
+      time within the first quarter of 1867 might become
+
+      2 DATE BET 1 JAN 1867 AND 31 MAR 1867
+      3 PHRASE Q1 1867
+
+
+                                     Page 70 of 92
+The GEDCOM Standard                                                             7.0.0-rc1
+
+
+
+
+      Example — A record defining the Maid of Honor in a marriage might be‐
+      come
+
+      1 MARR
+      2 ASSO @I2@
+      3 ROLE OTHER
+      4 PHRASE Maid of Honor
+
+      Example — A name given to a foundling orphan might be
+
+      1 NAME Mary //
+      2 GIVN Mary
+      2 TYPE OTHER
+      3 PHRASE given by orphanage
+
+
+  PLAC (Place)
+  The principle place in which the superstructure’s subject occurred.
+
+  The PLAC tag is also used in a context-defined way for one other structure:
+
+  HEAD . PLAC
+  This is a placeholder for providing a default PLAC . FORM , and must not have a
+  payload.
+
+  POST (Postal code)
+  A code used by a postal service to identify an area to facilitate mail handling.
+  See ADDRESS_STRUCTURE (p.37) for more.
+
+  PUBL (Publication)
+  When and where the record was created. For published works, this includes in‐
+  formation such as the city of publication, name of the publisher, and year of
+  publication.
+
+  For an unpublished work, it includes the date the record was created and the
+  place where it was created. For example, the county and state of residence of a
+  person making a declaration for a pension or the city and state of residence of
+  the writer of a letter.
+
+
+
+
+                                     Page 71 of 92
+The GEDCOM Standard                                                                7.0.0-rc1
+
+
+
+
+  QUAY (Quality of data)
+  An enumerated value (p.80) indicating the credibility of a piece of information,
+  based on its supporting evidence. Some systems use this feature to rank mul‐
+  tiple conflicting opinions for display of most likely information first. It is not in‐
+  tended to eliminate the receivers’ need to evaluate the evidence for them‐
+  selves.
+
+  REFN (Reference)
+  A user-defined number or text that the submitter uses to identify the super‐
+  structure. For instance, it may be a record number within the submitter’s auto‐
+  mated or manual system, or it may be a page and position number on a pedi‐
+  gree chart.
+
+  This is metadata about the structure itself, not data about its subject. Multiple
+  structures describing different aspects of the same subject would have differ‐
+  ent REFN values.
+
+  REPO (Repository)
+  For a record, see REPOSITORY_RECORD (p.34) . For              a substructure, see
+  SOURCE_REPOSITORY_CITATION (p.51).
+
+  RESN (Restriction)
+  An List (p.23) of enumerated value (p.81) s signifying access to information may be
+  denied or otherwise restricted.
+  The RESN structure is provided to assist software in filtering data that should
+  not be exported or otherwise used in a particular context. It is recommended
+  that tools provide an interface to allow users to filter data on export such that
+  certain RESN structure payload entries result in the RESN structure and its su‐
+  perstructure being removed from the export. Such removal must not violate
+  GEDCOM constraints: see Removing data (p.18) for more.
+
+  This is metadata about the structure itself, not data about its subject.
+
+  ROLE (Role)
+  An enumerated value (p.81) indicating what role this person played in an event
+  or person’s life.
+
+
+
+
+                                       Page 72 of 92
+The GEDCOM Standard                                                               7.0.0-rc1
+
+
+
+
+      Example — The following indicates a child’s birth record as the source of
+      the mother’s name:
+
+      0 @I1@ INDI
+      1 NAME Mary //
+      2 SOUR @S1@
+      3 EVEN BIRT
+      4 ROLE MOTH
+
+      Example — The following indicates that a person’s best friend was a wit‐
+      ness at their baptism:
+
+      0 @I2@ INDI
+      1 ASSO @I3@
+      2 ROLE FRIEND
+      3 PHRASE best friend
+      1 BAPM
+      2 ASSO @I3@
+      3 ROLE WITN
+
+
+  SCHMA (Extension schema)
+  A container for storing meta-information about the extension tags used in this
+  document. See Extensions (p.13) for more.
+
+  SDATE (Sort date)
+  A date to be used as a sorting hint. It is intended for use when the actual date is
+  unknown, but the display order may be dependent on date.
+
+  If both a DATE (p.61) and SDATE are present in the same structure, the SDATE
+  should be used for sorting and positioning while the DATE should be displayed
+  as the date of the structure.
+
+  SEX (Sex)
+  An enumerated value (p.82) that indicates the sex of the individual at birth.
+
+  SNOTE (Shared Note)
+  A note that is shared by multiple structures (if a record) or a pointer to such a
+  note (if a substructure). See SHARED_NOTE_RECORD (p.34) and NOTE_STRUCTURE (p.
+  47) for more.
+
+
+
+
+                                      Page 73 of 92
+The GEDCOM Standard                                                              7.0.0-rc1
+
+
+
+
+  SOUR (Source)
+  A description of an entire source (if a record) or the relevant part thereof to
+  support the containing data (if a substructure). See SOURCE_RECORD (p.36) and
+  SOURCE_CITATION (p.50) for more.
+
+  The SOUR tag is also used in a context-defined way for one other structure:
+
+  HEAD . SOUR (Source System)
+  An identifier for the product producing this GEDCOM document. A registration
+  process for these identifiers existed for a time, but no longer does. If an existing
+  identifier is known, it should be used. Otherwise, a URI owned by the product
+  should be used instead.
+
+  SPFX (Surname prefix)
+  A name piece used as a non-indexing pre-part of a surname.
+
+  SURN (Surname)
+  A family name passed on or used by members of a family.
+
+  STAE (State)
+  A geographical division of a larger jurisdictional area, such as a State within the
+  United States of America. See ADDRESS_STRUCTURE (p.37) for more.
+
+  STAT (Status)
+  An enumerated value assessing of the state or condition of something. Expected
+  values differ by context; see FAMC . STAT (p.82) and (Latter-Day Saint Ordin‐
+  ance). STAT (p.83) for more.
+
+  SUBM (Submitter)
+  A contributor of information in the substructure, or a description of such a con‐
+  tributor if a record. As a substructure, this is metadata about the structure it‐
+  self, not data about its subject. See SUBMITTER_RECORD (p.37) for more.
+
+  TAG (Extension tag)
+  Information relating to a single extension tag as used in this document. See Ex‐
+  tensions (p.13) for more.
+
+
+
+
+                                      Page 74 of 92
+The GEDCOM Standard                                                              7.0.0-rc1
+
+
+
+
+  TEMP (Temple)
+  The name of a temple of The Church of Jesus Christ of Latter-day Saints. Previ‐
+  ous editions of GEDCOM recommended using a set of abbreviations for temple
+  names, but the list of abbreviations is no longer published by the Church and
+  using abbreviations is no longer recommended.
+
+  TEXT (Text from Source)
+  A verbatim copy of any description contained within the source. This indicates
+  notes or text that are actually contained in the source document, not the sub‐
+  mitter’s opinion about the source. This should be, from the evidence point of
+  view, “what the original record keeper said” as opposed to the researcher’s in‐
+  terpretation.
+
+  TIME (Time)
+  A time value in a 24-hour clock format.
+
+  TITL (Title)
+  The title, formal or informal, of the superstructure.
+
+  A published work, such as a book, might have a title plus the title of the series of
+  which the book is a part. A magazine article would have a title plus the title of
+  the magazine that published the article.
+
+  For an unpublished work, including most digital files, titles should be descript‐
+  ive and appropriate to the work.
+
+      Example —
+
+         • The TITL of a letter might include the date, the sender, and the
+           receiver.
+         • The TITL of a transaction between a buyer and seller might have
+           their names and the transaction date.
+         • The TITL of a family Bible containing genealogical information
+           might have past and present owners and a physical description of
+           the book.
+         • The TITL of a personal interview would cite the informant and
+           interviewer.
+
+  The TITL tag is also used in a context-defined way for one other structure:
+
+
+
+
+                                      Page 75 of 92
+The GEDCOM Standard                                                            7.0.0-rc1
+
+
+
+
+  INDI . TITL
+  An Individual Attribute (p.54)
+
+  TOP
+  A number of pixels to not display from the top side of the image. See CROP (p.60)
+  for more.
+
+  TRLR (Trailer)
+  A pseudo-structure marking the end of a GEDCOM document. See The Header
+  and Trailer (p.13) for more.
+
+  TRAN (Translation or transliteration)
+  A translation or transliteration of the superstructure. It presents information in
+  the same format as the superstructure, but with a different language tag. See
+  PLACE_STRUCTURE (p.49) , PERSONAL_NAME_STRUCTURE (p.48) , and LANG (p.66) for
+  more.
+
+  TYPE
+  A descriptive word or phrase used to further classify the superstructure.
+
+  When both a NOTE (p.69) and free-text TYPE are permitted as substructures of
+  the same structure, the displaying systems should always display the TYPE
+  value when they display the data from the associated structure; NOTE will typ‐
+  ically be visible only in a detailed view.
+  TYPE must be used whenever the generic EVEN (p.62) , FACT (p.64) and IDNO (p.54)
+  tags are used. It may also be used for any other event or attribute.
+
+  Using the subordinate TYPE classification method provides a further classifica‐
+  tion of the superstructure but does not change its basic meaning.
+
+
+
+
+                                     Page 76 of 92
+The GEDCOM Standard                                                            7.0.0-rc1
+
+
+
+
+      Example — A MARR (p.53) with a TYPE could clarify what kind of marriage
+      was performed:
+
+      0 @I1@ INDI
+      1 MARR
+      2 TYPE Common Law
+
+      This classifies the entry as a common law marriage but the event is still a
+      marriage event.
+
+      Other descriptor values might include, for example,
+
+         • “Stillborn” as a qualifier to BIRT (p.52) (birth)
+         • “Tribal Custom” as a qualifier to MARR (marriage)
+         • “College” as a qualifier to GRAD (graduation)
+
+      See also FACT (p.64) and EVEN (p.62) for additional examples.
+
+  The TYPE tag is also used in a context-defined way for two other structures:
+
+  NAME . TYPE
+  An enumerated value (p.83) indicating the type of the name thereof.
+
+  EXID . TYPE
+  The authority issuing the EXID (p.63) , represented as a URI. It is recommended
+  that this be a URL.
+
+  If the authority maintains stable URLs for each identifier it issues, it is recom‐
+  mended that the TYPE payload be selected such that appending the EXID pay‐
+  load to it yields that URL. However, this is not required and a different URI for
+  the set of issued identifiers may be used instead.
+
+  UID (Unique Identifier)
+  A globally-unique identifier of the superstructure, to be preserved across edits.
+  If a globally-unique identifier for the record already exists, it should be used
+  without modification, not even whitespace or letter case normalization. New
+  globally unique identifiers should be created and formatted as described in RFC
+  4122.
+
+  This is metadata about the structure itself, not data about its subject. Multiple
+  structures describing different aspects of the same subject would have differ‐
+  ent UID values.
+
+
+
+
+                                       Page 77 of 92
+The GEDCOM Standard                                                             7.0.0-rc1
+
+
+
+
+      Note — Some systems used a 16-byte UUID with a custom 2-byte check‐
+      sum for a total of 18 bytes:
+
+         • checksum byte 1 = (sum of (bytei) for i 1 through 16) mod 256
+         • checksum byte 2 = (sum of ((16 − i) × (bytei)) for i 1 through 16) mod
+          256
+
+      Use of checksums for UIDs is discouraged except in cases where error-
+      prone input is expected and an appropriate action to take in case of an
+      error is known.
+
+  VERS (Version)
+  An identifier that represents the version level assigned to the associated
+  product. It is defined and changed by the creators of the product.
+
+  The VERS tag is also used in a context-defined way for one other structure:
+
+  GEDC . VERS
+  The official GEDCOM standard version number. See A Guide to Version Numbers
+  (p.5) for more.
+
+
+  WIDTH
+  How many pixels to display horizontally for the image. See CROP (p.60) for more.
+
+  WIFE
+  A container for information relevant to the subject of the superstructure specif‐
+  ic to the individual described by the associated FAM (p.63)’s WIFE substructure.
+
+  The WIFE tag is also used in a context-defined way for one other structure:
+
+  FAM . WIFE
+  A partner in a FAM record. See FAMILY_RECORD (p.30) for more.
+
+  WWW (Web address)
+  A URL or other locator for a World Wide Web page, as defined by any relevant
+  standard such as whatwg/url, RFC 3986, RFC 3987, and so forth.
+
+  If an invalid web address is present upon import, it should be preserved as-is
+  on export.
+
+
+
+
+                                      Page 78 of 92
+The GEDCOM Standard                                                          7.0.0-rc1
+
+
+
+
+  3.4. Enumeration Values
+  FAMC . ADOP
+    Value      Meaning
+    HUSB       Adopted by the HUSB of the FAM pointed to by FAMC
+    WIFE       Adopted by the WIFE of the FAM pointed to by FAMC
+    BOTH       Adopted by both HUSB and WIFE of the FAM pointed to by FAMC
+
+
+  DATA . EVEN
+  A comma-separated list of event- and attribute-type tag names. See Events (p.51)
+  and Attributes (p.54).
+
+
+  SOUR . EVEN
+  An event-type tag name. See Events (p.51) and SOUR.EVEN (p.63).
+
+
+  MEDI
+    Value             Meaning
+    AUDIO             An audio recording
+    BOOK              A bound book
+    CARD              A card or file entry
+    ELECTRONIC        A digital artifact
+    FICHE             Microfiche
+    FILM              Microfilm
+    MAGAZINE          Printed periodical
+    MANUSCRIPT        Written pages
+    MAP               Cartographic map
+    NEWSPAPER         Printed newspaper
+    PHOTO             Photograph
+    TOMBSTONE         Burial marker or related memorial
+
+
+
+                                       Page 79 of 92
+The GEDCOM Standard                                                                7.0.0-rc1
+
+
+
+
+    Value             Meaning
+    VIDEO             Motion picture recording
+    OTHER             A medium not listed here; should have a PHRASE
+                      substructure
+
+
+  PEDI
+    Value         Meaning
+    ADOPTED       adoptive parents.
+    BIRTH         birth parents.
+    FOSTER        the child was included in a foster or guardian family.
+    SEALING       the child was sealed to parents other than birth parents.
+    OTHER         A connection not listed here; should have a PHRASE
+                  substructure
+
+      Note — The structures for foster children in particular, and family rela‐
+      tionships in general, are known to have undesirable limitations and are
+      likely to change in a future version of GEDCOM.
+
+
+  NO
+  A single event- or attribute-type tag name. See Events (p.51) and Attributes (p.54).
+
+
+  QUAY
+    Value      Meaning
+    0          Unreliable evidence or estimated data
+    1          Questionable reliability of evidence (interviews, census, oral
+               genealogies, or potential for bias, such as an autobiography)
+    2          Secondary evidence, data officially recorded sometime after the
+               event
+    3          Direct and primary evidence used, or by dominance of the
+               evidence
+
+  Although the values look like integers, they do not have numeric meaning.
+
+
+
+
+                                       Page 80 of 92
+

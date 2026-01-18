@@ -1,0 +1,121 @@
+.timeline-container {
+    position: relative;
+    padding: 0.5rem 0;
+    margin-left: 0.75rem;
+    border-left: 2px solid var(--border);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+    transition: all 0.2s ease;
+}
+
+.timeline-item.is-editing {
+    opacity: 0.5;
+    transform: scale(0.98);
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -0.42rem;
+    top: 0.35rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: white;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    z-index: 1;
+    box-shadow: 0 0 0 2px white;
+    /* Cleaner separation from line */
+}
+
+.timeline-content {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    padding: 0.75rem 1rem;
+    border-radius: 0.6rem;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+}
+
+.timeline-container.editable .timeline-item:hover .timeline-content {
+    background: #f8fafc;
+    border-color: var(--primary-color);
+    transform: translateX(2px);
+    box-shadow: var(--shadow-md);
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.timeline-date {
+    font-weight: 600;
+    color: var(--text-main);
+    font-size: 0.85rem;
+}
+
+.timeline-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0.15rem 0;
+}
+
+.timeline-place {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.timeline-actions {
+    display: flex;
+    gap: 0.4rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.timeline-item:hover .timeline-actions {
+    opacity: 1;
+}
+
+.btn-tiny {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-tiny:hover {
+    background: rgba(37, 99, 235, 0.1);
+    color: var(--primary-color);
+}
+
+.btn-tiny.danger:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+.timeline-empty {
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.9rem;
+}

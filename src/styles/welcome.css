@@ -1,0 +1,116 @@
+/* Welcome Screen Responsive Styles */
+.welcome-content {
+    max-width: 900px;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+.welcome-title {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+}
+
+.welcome-subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.feature-card {
+    padding: 1.25rem;
+    background: var(--bg-card);
+    border-radius: 0.75rem;
+    border: 1px solid var(--border);
+    text-align: left;
+}
+
+.feature-icon {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.feature-title {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.feature-description {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.cta-box {
+    padding: 1.5rem;
+    background: var(--bg-card);
+    border-radius: 0.75rem;
+    border: 2px dashed var(--border);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.cta-title {
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+}
+
+.cta-description {
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
+}
+
+.cta-button {
+    padding: 0.875rem 1.75rem;
+    font-size: 1rem;
+}
+
+.cta-note {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.875rem;
+    margin-bottom: 0;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .feature-card {
+        padding: 1rem;
+    }
+
+    .cta-box {
+        padding: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-content {
+        padding: 0 0.75rem;
+    }
+
+    .cta-button {
+        width: 100%;
+        padding: 0.75rem 1.5rem;
+    }
+}
