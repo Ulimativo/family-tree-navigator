@@ -4,11 +4,9 @@ import { TreeProvider, useTree } from './context/TreeContext.jsx'
 import TreeView from './components/Tree/TreeView.jsx'
 import ProfileView from './components/Profile/ProfileView.jsx'
 import PersonSidebar from './components/Navigation/PersonSidebar.jsx'
-import ThemeSwitcher from './components/UI/ThemeSwitcher.jsx'
 import LanguageSelector from './components/UI/LanguageSelector.jsx'
-import StatisticsDashboard from './components/Visualization/StatisticsDashboard.jsx'
-import DynastyDashboard from './components/Clustering/DynastyDashboard.jsx'
-import { BarChart2, Layers, Zap, Database, X as CloseIcon } from 'lucide-react';
+import { QualityReportModal } from './components/Quality/QualityReportModal.jsx'
+import { Zap, Database, X as CloseIcon, AlertCircle } from 'lucide-react';
 import { ProjectMode } from './lib/gedcom/models.js';
 import { ProjectExporter } from './lib/gedcom/exporter.js';
 import { useTranslation } from './i18n/useTranslation.js';
@@ -93,12 +91,18 @@ const AppContent = () => {
         focalPersonId,
         setFocalPersonId,
         selectedPersonId,
-        setSelectedPersonId
+        setSelectedPersonId,
+        showQualityReport,
+        setShowQualityReport,
+        hasQualityIssues,
+        dismissQualityIssue,
+        revalidateQuality,
+        applyQualityFix,
+        applyBatchFixes,
+        dismissBatchIssues
     } = useTree();
     const { t } = useTranslation();
 
-    const [showStats, setShowStats] = useState(false);
-    const [showDynasty, setShowDynasty] = useState(false);
     const [showImportModal, setShowImportModal] = useState(false);
     const [showExportDropdown, setShowExportDropdown] = useState(false);
     const [pendingGedcom, setPendingGedcom] = useState(null);
@@ -167,22 +171,39 @@ const AppContent = () => {
             <header className="app-header">
                 <div className="header-left">
                     <h1>{t('header.title')}</h1>
-                    <ThemeSwitcher />
                     <LanguageSelector />
-                    <button
-                        className="btn-icon"
-                        onClick={() => setShowStats(true)}
-                        title={t('header.statistics')}
-                    >
-                        <BarChart2 size={20} />
-                    </button>
-                    <button
-                        className="btn-icon"
-                        onClick={() => setShowDynasty(true)}
-                        title={t('header.dynasty')}
-                    >
-                        <Layers size={20} />
-                    </button>
+                    {data && (
+                        <button
+                            className="btn-icon"
+                            onClick={() => setShowQualityReport(true)}
+                            title="Data Quality Report"
+                            style={{
+                                position: 'relative',
+                                color: hasQualityIssues ? '#ef4444' : 'inherit'
+                            }}
+                        >
+                            <AlertCircle size={20} />
+                            {hasQualityIssues && (
+                                <span style={{
+                                    position: 'absolute',
+                                    top: '-4px',
+                                    right: '-4px',
+                                    background: '#ef4444',
+                                    color: 'white',
+                                    borderRadius: '50%',
+                                    width: '18px',
+                                    height: '18px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    fontSize: '11px',
+                                    fontWeight: 'bold'
+                                }}>
+                                    {data?.validationResults?.issueCount || 0}
+                                </span>
+                            )}
+                        </button>
+                    )}
                 </div>
                 <div className="header-actions">
                     <input
@@ -334,8 +355,22 @@ const AppContent = () => {
                     </div>
                 )}
             </main>
-            {showStats && <StatisticsDashboard onClose={() => setShowStats(false)} />}
-            {showDynasty && <DynastyDashboard onClose={() => setShowDynasty(false)} />}
+            {showQualityReport && data && (
+                <QualityReportModal
+                    project={data}
+                    isOpen={showQualityReport}
+                    onClose={() => setShowQualityReport(false)}
+                    onDismissIssue={dismissQualityIssue}
+                    onNavigateToProfile={(personId) => {
+                        setSelectedPersonId(personId);
+                        setFocalPersonId(personId);
+                        setShowQualityReport(false);
+                    }}
+                    onApplyQuickFix={applyQualityFix}
+                    onApplyBatchFixes={applyBatchFixes}
+                    onDismissBatchIssues={dismissBatchIssues}
+                />
+            )}
         </div>
     );
 };

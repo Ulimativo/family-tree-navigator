@@ -1,7 +1,13 @@
 import React, { useState, useMemo } from 'react';
 import { Search, User, Filter, ChevronLeft, ChevronRight, Users, Calendar } from 'lucide-react';
-import { getYear } from '../../lib/analysis/statistics.js';
 import { useTranslation } from '../../i18n/useTranslation.js';
+
+// Extract year from date string (e.g., "1 JAN 2000" -> 2000)
+const getYear = (dateStr) => {
+    if (!dateStr) return null;
+    const match = dateStr.match(/\d{4}/);
+    return match ? parseInt(match[0]) : null;
+};
 
 const PersonSidebar = ({ individuals, families, onSelectPerson, selectedId }) => {
     const { t } = useTranslation();

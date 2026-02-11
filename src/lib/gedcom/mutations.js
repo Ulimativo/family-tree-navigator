@@ -1,4 +1,4 @@
-import { Individual, Family, Cluster, Source, Media, SharedNote, Repository } from './models.js';
+import { Individual, Family, Source, Media, SharedNote, Repository } from './models.js';
 
 /**
  * Generates a unique ID for new records.
@@ -25,14 +25,6 @@ export class ProjectMutator {
         this.repoMap = new Map(project.repositories.map(r => [r.id, JSON.parse(JSON.stringify(r))]));
         this.mediaMap = new Map(project.media.map(m => [m.id, JSON.parse(JSON.stringify(m))]));
         this.noteMap = new Map(project.sharedNotes.map(n => [n.id, JSON.parse(JSON.stringify(n))]));
-
-        this.clusterMap = new Map((project.clusters || []).map(c => {
-            const cluster = new Cluster(c.id);
-            Object.assign(cluster, c);
-            cluster.personIds = new Set(c.personIds || []);
-            cluster.familyIds = new Set(c.familyIds || []);
-            return [c.id, cluster];
-        }));
     }
 
     getProject() {
@@ -44,7 +36,6 @@ export class ProjectMutator {
             repositories: Array.from(this.repoMap.values()),
             media: Array.from(this.mediaMap.values()),
             sharedNotes: Array.from(this.noteMap.values()),
-            clusters: Array.from(this.clusterMap.values()).map(c => c.toJSON()),
             metadata: {
                 ...this.project.metadata,
                 lastModified: new Date().toISOString()
@@ -58,6 +49,13 @@ export class ProjectMutator {
         const { name, ...rest } = updates;
         if (name) indi.names = [{ value: name }];
         Object.assign(indi, rest);
+        return this;
+    }
+
+    updateFamily(id, updates) {
+        const fam = this.famMap.get(id);
+        if (!fam) return this;
+        Object.assign(fam, updates);
         return this;
     }
 
@@ -154,45 +152,5 @@ export class ProjectMutator {
         else fam.wife = parent.id;
         parent.familiesAsSpouse.push(famId);
         return parent;
-    }
-
-    createCluster(data) {
-        const id = generateId('C', this.clusterMap);
-        const cluster = new Cluster(id);
-        const { personIds, familyIds, ...rest } = data;
-        Object.assign(cluster, rest);
-        if (personIds) cluster.personIds = new Set(personIds);
-        if (familyIds) cluster.familyIds = new Set(familyIds);
-        this.clusterMap.set(id, cluster);
-        return cluster;
-    }
-
-    updateCluster(id, updates) {
-        const cluster = this.clusterMap.get(id);
-        if (cluster) Object.assign(cluster, updates);
-        return this;
-    }
-
-    deleteCluster(id) {
-        this.clusterMap.delete(id);
-        return this;
-    }
-
-    addPersonToCluster(clusterId, personId) {
-        const cluster = this.clusterMap.get(clusterId);
-        if (cluster) cluster.personIds.add(personId);
-        return this;
-    }
-
-    removePersonFromCluster(clusterId, personId) {
-        const cluster = this.clusterMap.get(clusterId);
-        if (cluster) cluster.personIds.delete(personId);
-        return this;
-    }
-
-    addFamilyToCluster(clusterId, famId) {
-        const cluster = this.clusterMap.get(clusterId);
-        if (cluster) cluster.familyIds.add(famId);
-        return this;
     }
 }

@@ -5,10 +5,11 @@ import { useTree } from '../../context/TreeContext.jsx';
 import { useTranslation } from '../../i18n/useTranslation.js';
 import TimelineView from '../Visualization/TimelineView.jsx';
 import AddRelativeModal from './AddRelativeModal.jsx';
+import { QualityIssuesPanel } from '../Quality/QualityIssuesPanel.jsx';
 import { getTagInfo, TAG_METADATA } from '../../lib/gedcom/schema.js';
 
 const ProfileView = ({ person, families, individuals, onClose, onNavigate }) => {
-    const { updatePerson } = useTree();
+    const { updatePerson, data, setShowQualityReport } = useTree();
     const { t } = useTranslation();
     const [isEditing, setIsEditing] = useState(false);
     const [editFormData, setEditFormData] = useState({});
@@ -29,7 +30,7 @@ const ProfileView = ({ person, families, individuals, onClose, onNavigate }) => 
     };
 
     // helper for adding logic
-    const { data, addRelative, addEvent, updateEvent, deleteEvent, addPersonToCluster, removePersonFromCluster } = useTree();
+    const { addRelative, addEvent, updateEvent, deleteEvent, addPersonToCluster, removePersonFromCluster } = useTree();
     const [showAddMenu, setShowAddMenu] = useState(false);
     const [showAddRelativeModal, setShowAddRelativeModal] = useState(false);
     const [addRelativeType, setAddRelativeType] = useState(null);
@@ -225,6 +226,17 @@ const ProfileView = ({ person, families, individuals, onClose, onNavigate }) => 
                         </button>
                     )}
                 </div>
+
+                {/* Quality Issues Panel */}
+                {data?.validationResults && (
+                    <div style={{ marginBottom: '12px' }}>
+                        <QualityIssuesPanel
+                            personId={person.id}
+                            validationResults={data.validationResults}
+                            onOpenQualityReport={() => setShowQualityReport(true)}
+                        />
+                    </div>
+                )}
 
                 <section className="profile-section">
                     <div className="section-header">

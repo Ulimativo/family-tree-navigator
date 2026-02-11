@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Family Tree Navigator is a privacy-focused genealogy web application built with React and Vite. It provides GEDCOM 7.0 import/export, interactive tree visualization, dynasty/cluster analysis, and comprehensive statistics. Currently operates in browser-only mode; Firebase cloud persistence is planned but not yet implemented.
+Family Tree Navigator is a privacy-focused genealogy web application built with React and Vite. It provides GEDCOM 7.0 import/export, interactive tree visualization, data quality assessment, and comprehensive validation. Currently operates in browser-only mode; Firebase cloud persistence is planned but not yet implemented. Single theme: Classic Parchment (heritage-focused aesthetic for genealogy research).
 
 ## Development Commands
 
@@ -51,7 +51,7 @@ setData(prevProject => {
 - `Individual`: Names (structured: given, surname, prefix, suffix), events, attributes, family links
 - `Family`: Husband/wife IDs, children IDs, marriage events
 - `Source`, `Media`, `Repository`, `SharedNote`: Standard GEDCOM entities
-- `Cluster`: Dynasty/group management with inheritance rules
+- `ValidationResult`: Data quality assessment results with issue tracking
 
 **Project Container**:
 - `Project`: Top-level container with `ProjectMode` (LIGHTWEIGHT vs PERSISTENT)
@@ -78,16 +78,17 @@ setData(prevProject => {
    - Localized labels for 140+ GEDCOM tags
    - Tag definitions, validation rules
 
-### Analysis & Clustering
+### Data Quality Assessment
 
-**Clustering** (`src/lib/analysis/clustering.js`):
-- Dynasty/surname/geographic/genetic cluster management
-- Succession calculation (primogeniture, male-preference)
-- Root-finding and lineage tracing
+**Quality Validation** (`src/lib/gedcom/quality/validator.js`):
+- Comprehensive data quality checks across all GEDCOM entities
+- Issue categorization: completeness, consistency, accuracy, formatting
+- Severity levels: critical, warning, quality, suggestion
 
-**Statistics** (`src/lib/analysis/statistics.js`):
-- Demographics, longevity analysis, surname distribution
-- Event timeline generation
+**Quality Fixes** (`src/lib/gedcom/quality/fixers.js`):
+- Automated quick-fix suggestions for common data quality issues
+- Batch operation support for applying multiple fixes
+- Issue dismissal and restoration capabilities
 
 ### Component Architecture
 
@@ -99,9 +100,11 @@ setData(prevProject => {
 - Display individual details and life events
 - GEDCOM 7.0 tag awareness
 
-**Clustering UI** (`src/components/Clustering/`):
-- `ClusterManager.jsx`: Create/edit dynasties
-- `DynastyDashboard.jsx`: Succession lines and inheritance rules
+**Data Quality UI** (`src/components/Quality/`):
+- `QualityReportModal.jsx`: Main quality assessment dashboard
+- `IssueList.jsx`, `IssueCard.jsx`: Issue display and interaction
+- `BatchOperationBar.jsx`: Batch operations for fixes and dismissals
+- `QuickFixModal.jsx`, `QualityIssuesPanel.jsx`: Detailed issue views
 
 **Navigation** (`src/components/Navigation/PersonSidebar.jsx`):
 - Person search and tree navigation
@@ -134,12 +137,6 @@ setData(prevProject => {
 - Individuals link to families via `familyAsChild` (birth family) and `familyAsSpouse[]` (marriages)
 - Families link to individuals via `husband`, `wife`, `children[]`
 
-### Cluster System
-- Clusters can represent dynasties, surnames, geographic groups, genetic lineages
-- Each cluster has: `id`, `name`, `type`, `personIds` (Set), `familyIds` (Set)
-- Inheritance rules: `InheritanceType.AGNATIC` (male-line) vs `COGNATIC` (all descendants)
-- Succession laws: `PRIMOGENITURE_ABSOLUTE`, `PRIMOGENITURE_MALE_PREFERENCE`
-
 ## Data Files
 
 ### Development Data (`data_dev/`)
@@ -157,12 +154,12 @@ setData(prevProject => {
 
 ## Styling
 
-CSS is organized by feature:
+CSS is organized by feature with a single theme (Classic Parchment):
 - `global.css`: Base styles and CSS variables
-- `theme.css`: Parchment theme (classic genealogy aesthetic)
-- Feature-specific: `tree.css`, `profile.css`, `clustering.css`, `statistics.css`, `timeline.css`, etc.
+- `theme.css`: Classic Parchment theme (heritage genealogy aesthetic)
+- Feature-specific: `tree.css`, `profile.css`, `timeline.css`, `quality.css`, etc.
 
-Uses CSS variables extensively for theming (`--parchment-bg`, `--ink-primary`, etc.)
+Uses CSS variables extensively for theming (`--primary-color`, `--bg-card`, `--text-main`, etc.)
 
 ## Common Patterns
 
@@ -173,11 +170,11 @@ Uses CSS variables extensively for theming (`--parchment-bg`, `--ink-primary`, e
 4. Add mutation method in `mutations.js` if editing is needed
 5. Update UI components to display/edit the feature
 
-### Creating a New Analysis
-1. Add function to `src/lib/analysis/statistics.js` or `clustering.js`
-2. Create visualization component in `src/components/Visualization/`
-3. Add corresponding CSS file in `src/styles/`
-4. Integrate into UI (typically via sidebar or dashboard)
+### Creating a New Validation Check
+1. Add check function to `src/lib/gedcom/quality/validator.js`
+2. Return issue objects with: `id`, `severity`, `category`, `entityId`, `entityType`, `message`, `autoFixable`
+3. Add corresponding quick-fix in `src/lib/gedcom/quality/fixers.js` if auto-fixable
+4. Update Quality UI components to display results
 
 ### Working with TreeContext
 Always use callbacks from context, never mutate `data` directly:

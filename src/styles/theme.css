@@ -1,242 +1,8 @@
 /* Google Fonts - Heritage Typography */
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap');
 
-/* Base Variables & Defaults (Modern Minimalist) */
+/* Classic Parchment Theme - Default */
 :root {
-  --primary-color: #2563eb;
-  --primary-hover: #1d4ed8;
-  --primary-light: #3b82f6;
-  --primary-lighter: #dbeafe;
-  --bg-dark: #f8fafc;
-  --bg-card: #ffffff;
-  --bg-hover: #f1f5f9;
-  --bg-subtle: #f0f4f8;
-  --text-main: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
-  --text-light: #94a3b8;
-  --accent: #0ea5e9;
-  --accent-secondary: #06b6d4;
-  --success: #10b981;
-  --warning: #f59e0b;
-  --error: #ef4444;
-  --border: #e2e8f0;
-  --border-light: #f1f5f9;
-  --glass: rgba(255, 255, 255, 0.8);
-  --glass-darker: rgba(15, 23, 42, 0.05);
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-  --shadow-inset: inset 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --border-radius: 0.5rem;
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-
-  /* Typography */
-  --font-family-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-
-  /* Spacing Scale */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-12: 3rem;
-
-  /* Transitions */
-  --transition-fast: 0.15s ease-in-out;
-  --transition-base: 0.2s ease-in-out;
-  --transition-slow: 0.3s ease-in-out;
-}
-
-/* 1. Modern Minimalist (Explicit) */
-[data-theme="modern"] {
-  --primary-color: #2563eb;
-  --primary-hover: #1d4ed8;
-  --primary-light: #3b82f6;
-  --primary-lighter: #dbeafe;
-  --bg-dark: #f8fafc;
-  --bg-card: #ffffff;
-  --bg-hover: #f1f5f9;
-  --bg-subtle: #f0f4f8;
-  --text-main: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
-  --text-light: #94a3b8;
-  --accent: #0ea5e9;
-  --accent-secondary: #06b6d4;
-  --success: #10b981;
-  --warning: #f59e0b;
-  --error: #ef4444;
-  --border: #e2e8f0;
-  --border-light: #f1f5f9;
-  --glass: rgba(255, 255, 255, 0.8);
-  --glass-darker: rgba(15, 23, 42, 0.05);
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-  --shadow-inset: inset 0 1px 2px 0 rgb(0 0 0 / 0.05);
-}
-
-/* Modern Minimalist Theme Specific Styling */
-[data-theme="modern"] body,
-[data-theme="modern"] #root {
-  font-family: var(--font-family-ui);
-  background: var(--bg-dark);
-  font-size: clamp(0.875rem, 1vw, 1rem);
-  line-height: 1.6;
-}
-
-/* Responsive Typography - Modern Theme */
-[data-theme="modern"] h1 {
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-[data-theme="modern"] h2 {
-  font-size: clamp(1.25rem, 3.5vw, 2rem);
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-[data-theme="modern"] h3 {
-  font-size: clamp(1.1rem, 3vw, 1.5rem);
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-[data-theme="modern"] h4,
-[data-theme="modern"] h5,
-[data-theme="modern"] h6 {
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-[data-theme="modern"] button,
-[data-theme="modern"] .btn-primary,
-[data-theme="modern"] .btn-secondary {
-  font-size: clamp(0.8rem, 2vw, 0.95rem);
-}
-
-/* Modern overlay - subtle rather than dark */
-[data-theme="modern"] .stats-overlay,
-[data-theme="modern"] .modal-overlay,
-[data-theme="modern"] .add-relative-overlay {
-  background: rgba(15, 23, 42, 0.25);
-  backdrop-filter: blur(2px);
-}
-
-/* Modal/Card styling for modern theme */
-[data-theme="modern"] .stats-modal,
-[data-theme="modern"] .dynasty-modal,
-[data-theme="modern"] .profile-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-}
-
-/* Button improvements for modern theme */
-[data-theme="modern"] .btn-primary {
-  background: var(--primary-color);
-  border: none;
-  border-radius: var(--radius-md);
-  font-weight: var(--font-weight-medium);
-  transition: all var(--transition-base);
-}
-
-[data-theme="modern"] .btn-primary:hover {
-  background: var(--primary-hover);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
-
-[data-theme="modern"] .btn-primary:active {
-  transform: translateY(0);
-  box-shadow: var(--shadow-sm);
-}
-
-/* Input focus states */
-[data-theme="modern"] input:focus,
-[data-theme="modern"] textarea:focus,
-[data-theme="modern"] select:focus {
-  border-color: var(--primary-color);
-  outline: none;
-  box-shadow: 0 0 0 3px var(--primary-lighter);
-}
-
-/* Card hover effect */
-[data-theme="modern"] .stat-card:hover,
-[data-theme="modern"] .attribute-item:hover,
-[data-theme="modern"] .member-card:hover {
-  border-color: var(--primary-color);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  transition: all var(--transition-base);
-}
-
-/* Action button styling */
-[data-theme="modern"] .btn-action {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  transition: all var(--transition-base);
-}
-
-[data-theme="modern"] .btn-action:hover {
-  background: var(--bg-hover);
-  border-color: var(--primary-color);
-  color: var(--primary-color);
-}
-
-/* Badge styling */
-[data-theme="modern"] .cluster-badge,
-[data-theme="modern"] .event-tag,
-[data-theme="modern"] .timeline-tag {
-  background: var(--primary-lighter);
-  color: var(--primary-color);
-  border-radius: var(--radius-md);
-  font-weight: var(--font-weight-medium);
-  font-size: 0.8rem;
-}
-
-/* Scrollbar styling for modern theme */
-[data-theme="modern"] ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-[data-theme="modern"] ::-webkit-scrollbar-track {
-  background: var(--bg-dark);
-}
-
-[data-theme="modern"] ::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 4px;
-}
-
-[data-theme="modern"] ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-light);
-}
-
-/* Focal node highlight */
-[data-theme="modern"] .node.focal circle {
-  filter: drop-shadow(0 0 8px var(--primary-color)) drop-shadow(0 0 4px var(--accent));
-}
-
-/* 2. Classic Parchment (Heritage) */
-[data-theme="classic"] {
   /* Primary Colors - Antique Gold & Bronze */
   --primary-color: #854d0e;
   --primary-hover: #713f12;
@@ -314,43 +80,57 @@
   --font-family-primary: 'Crimson Text', 'Georgia', serif;
   --font-family-headings: 'Libre Baskerville', 'Georgia', serif;
   --font-family-ui: 'Inter', -apple-system, sans-serif;
+
+  /* Spacing Scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-base: 0.2s ease-in-out;
+  --transition-slow: 0.3s ease-in-out;
 }
 
 /* Classic Theme Typography Override */
-[data-theme="classic"] body,
-[data-theme="classic"] #root {
+body,
+#root {
   font-family: var(--font-family-primary);
   letter-spacing: 0.01em;
   line-height: 1.6;
 }
 
-[data-theme="classic"] h1,
-[data-theme="classic"] h2,
-[data-theme="classic"] h3,
-[data-theme="classic"] h4,
-[data-theme="classic"] h5,
-[data-theme="classic"] h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-family-headings);
   font-weight: 700;
   letter-spacing: -0.01em;
 }
 
-[data-theme="classic"] button,
-[data-theme="classic"] input,
-[data-theme="classic"] select,
-[data-theme="classic"] .ui-element {
+button,
+input,
+select,
+.ui-element {
   font-family: var(--font-family-ui);
 }
 
 /* Classic Theme - Parchment Texture & Background Effects */
-[data-theme="classic"] body,
-[data-theme="classic"] #root {
+body,
+#root {
   background: var(--bg-dark);
   position: relative;
 }
 
 /* Subtle paper grain texture */
-[data-theme="classic"] body::before {
+body::before {
   content: '';
   position: fixed;
   inset: 0;
@@ -363,7 +143,7 @@
 }
 
 /* Aged paper stains/spots */
-[data-theme="classic"] body::after {
+body::after {
   content: '';
   position: fixed;
   inset: 0;
@@ -378,16 +158,16 @@
 }
 
 /* Ensure content appears above texture */
-[data-theme="classic"] #root > * {
+#root > * {
   position: relative;
   z-index: 2;
 }
 
 /* Card embossed effect */
-[data-theme="classic"] .stat-card,
-[data-theme="classic"] .event-editor-card,
-[data-theme="classic"] .cluster-info-card,
-[data-theme="classic"] .profile-card {
+.stat-card,
+.event-editor-card,
+.cluster-info-card,
+.profile-card {
   box-shadow:
     var(--shadow-sm),
     inset 0 1px 0 var(--emboss-highlight),
@@ -395,17 +175,17 @@
 }
 
 /* Ornamental borders for important sections */
-[data-theme="classic"] .dynasty-modal,
-[data-theme="classic"] .stats-modal {
+.dynasty-modal,
+.stats-modal {
   border: 2px solid var(--border-dark);
   position: relative;
 }
 
 /* Corner flourishes using pseudo-elements */
-[data-theme="classic"] .dynasty-modal::before,
-[data-theme="classic"] .dynasty-modal::after,
-[data-theme="classic"] .stats-modal::before,
-[data-theme="classic"] .stats-modal::after {
+.dynasty-modal::before,
+.dynasty-modal::after,
+.stats-modal::before,
+.stats-modal::after {
   content: '';
   position: absolute;
   width: 20px;
@@ -413,16 +193,16 @@
   border-color: var(--border-ornate);
 }
 
-[data-theme="classic"] .dynasty-modal::before,
-[data-theme="classic"] .stats-modal::before {
+.dynasty-modal::before,
+.stats-modal::before {
   top: -2px;
   left: -2px;
   border-top: 3px solid var(--border-ornate);
   border-left: 3px solid var(--border-ornate);
 }
 
-[data-theme="classic"] .dynasty-modal::after,
-[data-theme="classic"] .stats-modal::after {
+.dynasty-modal::after,
+.stats-modal::after {
   top: -2px;
   right: -2px;
   border-top: 3px solid var(--border-ornate);
@@ -430,37 +210,37 @@
 }
 
 /* Button heritage styling */
-[data-theme="classic"] .btn-primary {
+.btn-primary {
   background: linear-gradient(to bottom, var(--primary-color), var(--primary-hover));
   border: 1px solid var(--border-ornate);
   box-shadow: var(--shadow-sm), inset 0 1px 0 var(--emboss-highlight);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-[data-theme="classic"] .btn-primary:hover {
+.btn-primary:hover {
   background: linear-gradient(to bottom, var(--primary-hover), var(--accent-secondary));
   box-shadow: var(--shadow-md), inset 0 1px 0 var(--emboss-highlight);
 }
 
 /* Ink spread effect for interactive elements */
-[data-theme="classic"] button:active,
-[data-theme="classic"] .btn-action:active {
+button:active,
+.btn-action:active {
   box-shadow: var(--ink-spread), var(--shadow-inset);
   transform: translateY(1px);
 }
 
 /* Heritage input styling */
-[data-theme="classic"] input,
-[data-theme="classic"] select,
-[data-theme="classic"] textarea {
+input,
+select,
+textarea {
   background: var(--bg-card);
   border: 1px solid var(--border-dark);
   box-shadow: var(--shadow-inset);
 }
 
-[data-theme="classic"] input:focus,
-[data-theme="classic"] select:focus,
-[data-theme="classic"] textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
   border-color: var(--border-ornate);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 10%, transparent);
 }
@@ -468,9 +248,9 @@
 /* Decorative Heritage Elements & Micro-interactions */
 
 /* Parchment curl effect on card hover */
-[data-theme="classic"] .stat-card:hover,
-[data-theme="classic"] .attribute-item:hover,
-[data-theme="classic"] .member-card:hover {
+.stat-card:hover,
+.attribute-item:hover,
+.member-card:hover {
   transform: translateY(-2px) rotate(0.2deg);
   box-shadow: var(--shadow-md), inset 0 1px 0 var(--emboss-highlight);
 }
@@ -485,7 +265,7 @@
   }
 }
 
-[data-theme="classic"] .node.focal circle {
+.node.focal circle {
   animation: heritage-pulse 3s ease-in-out infinite;
 }
 
@@ -499,8 +279,8 @@
   }
 }
 
-[data-theme="classic"] input:focus,
-[data-theme="classic"] textarea:focus {
+input:focus,
+textarea:focus {
   animation: quill-write 0.5s ease-in-out;
 }
 
@@ -516,8 +296,8 @@
   }
 }
 
-[data-theme="classic"] .dynasty-modal,
-[data-theme="classic"] .stats-modal {
+.dynasty-modal,
+.stats-modal {
   animation: parchment-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -538,28 +318,28 @@
 }
 
 /* Vintage scroll indicator */
-[data-theme="classic"] ::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 12px;
   height: 12px;
 }
 
-[data-theme="classic"] ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: var(--bg-dark);
   border: 1px solid var(--border);
 }
 
-[data-theme="classic"] ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: linear-gradient(to bottom, var(--border-dark), var(--border-ornate));
   border: 1px solid var(--border-ornate);
   border-radius: 6px;
 }
 
-[data-theme="classic"] ::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(to bottom, var(--border-ornate), var(--primary-color));
 }
 
 /* Marginal notes aesthetic for tooltips */
-[data-theme="classic"] [title]:hover::after {
+[title]:hover::after {
   background: var(--bg-card);
   border: 1px solid var(--border-ornate);
   box-shadow: var(--shadow-md);
@@ -569,9 +349,9 @@
 }
 
 /* Heritage badge styling */
-[data-theme="classic"] .cluster-badge,
-[data-theme="classic"] .event-tag,
-[data-theme="classic"] .timeline-tag {
+.cluster-badge,
+.event-tag,
+.timeline-tag {
   background: linear-gradient(135deg, var(--primary-color), var(--accent));
   color: var(--bg-card);
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -580,85 +360,29 @@
 }
 
 /* Double border technique for ornamental frames */
-[data-theme="classic"] .cluster-info-card {
+.cluster-info-card {
   border: 2px solid var(--border);
   outline: 1px solid var(--border-dark);
   outline-offset: 3px;
 }
 
 /* Aged ink link effect */
-[data-theme="classic"] a {
+a {
   color: var(--primary-color);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: border-bottom-color 0.2s;
 }
 
-[data-theme="classic"] a:hover {
+a:hover {
   border-bottom-color: var(--primary-color);
   color: var(--accent);
 }
 
 /* Embroidered patch style for tags */
-[data-theme="classic"] .surname-tag {
+.surname-tag {
   background: linear-gradient(135deg, var(--primary-color), var(--accent));
   border: 1px solid var(--border-ornate);
   box-shadow: var(--shadow-sm), inset 0 -1px 1px rgba(0, 0, 0, 0.1);
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
-}
-
-/* 3. Organic Roots (Nature) */
-[data-theme="organic"] {
-  --primary-color: #15803d;
-  /* Forest Green */
-  --primary-hover: #166534;
-  --bg-dark: #f0fdf4;
-  /* Very clear mint/white */
-  --bg-card: #ffffff;
-  --text-main: #14532d;
-  /* Dark Green Text */
-  --text-muted: #6b7280;
-  --accent: #a16207;
-  /* Earthy Brown/Yellow */
-  --border: #bbf7d0;
-  --glass: rgba(255, 255, 255, 0.8);
-}
-
-/* 4. Slate Professional (Neutral Dark) */
-[data-theme="slate"] {
-  --primary-color: #94a3b8;
-  /* Slate 400 */
-  --primary-hover: #cbd5e1;
-  --bg-dark: #0f172a;
-  /* Slate 900 */
-  --bg-card: #1e293b;
-  /* Slate 800 */
-  --text-main: #f1f5f9;
-  /* Slate 100 */
-  --text-muted: #94a3b8;
-  --accent: #38bdf8;
-  /* Sky Blue */
-  --border: #334155;
-  --glass: rgba(30, 41, 59, 0.8);
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
-}
-
-/* 5. Tokyo Noir (Cyberpunk/Original) */
-[data-theme="tokyo"] {
-  --primary-color: #6366f1;
-  /* Indigo */
-  --primary-hover: #4f46e5;
-  --bg-dark: #000000;
-  /* Pure Black */
-  --bg-card: #111111;
-  /* Near Black */
-  --text-main: #f8fafc;
-  --text-muted: #a1a1aa;
-  --accent: #d946ef;
-  /* Magenta Neon */
-  --border: #27272a;
-  --glass: rgba(17, 17, 17, 0.8);
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.8);
 }

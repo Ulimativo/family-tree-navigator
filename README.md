@@ -10,11 +10,12 @@ A modern, privacy-focused web application for exploring and managing your family
 - **Dynamic Tree View**: Navigate through generations with an intuitive, interactive family tree
 - **Profile Panels**: Detailed individual profiles with comprehensive life event timelines
 - **Smart Navigation**: Quick person search and relationship-based browsing
-
-### 📊 Advanced Analytics
-- **Dynasty & Cluster Analysis**: Identify family branches, noble houses, and genetic groups
-- **Statistical Insights**: Comprehensive demographics, longevity analysis, and surname distribution
 - **Timeline Views**: Chronological event visualization with GEDCOM 7.0 tag support
+
+### 🔍 Data Quality Assessment
+- **Quality Report**: Assess and improve data completeness and accuracy
+- **Auto-Fix Suggestions**: Automated improvements for common data issues
+- **Data Validation**: Comprehensive validation with severity levels
 
 ### 📝 Full GEDCOM 7.0 Support
 - **Complete Attribute Coverage**: 140+ GEDCOM tags with localized labels and descriptions
@@ -140,10 +141,10 @@ Currently, the application runs entirely in the browser and doesn't require envi
    - Click on individuals to view detailed profiles
    - Use the sidebar to search and filter
 
-3. **Analyze Your Data**
-   - View statistics dashboard for demographic insights
-   - Explore dynasty clusters and family branches
-   - Track lineage and succession patterns
+3. **Assess Data Quality**
+   - Run a quality report to identify issues in your data
+   - Apply automatic fixes for common data quality problems
+   - Track improvements with the quality score
 
 4. **Export Your Work**
    - Export to GEDCOM 7.0 format (standard)
@@ -166,12 +167,11 @@ familytree/
 │   │   ├── Tree/         # Tree visualization
 │   │   ├── Profile/      # Individual profiles
 │   │   ├── Navigation/   # Sidebar and search
-│   │   ├── Clustering/   # Dynasty analysis
+│   │   ├── Quality/      # Data quality assessment
 │   │   └── Visualization/# Charts and timelines
 │   ├── context/          # React context providers
 │   ├── lib/
-│   │   ├── gedcom/       # GEDCOM parser, exporter, models
-│   │   └── analysis/     # Statistics and clustering algorithms
+│   │   ├── gedcom/       # GEDCOM parser, exporter, models, validation
 │   └── styles/           # CSS modules
 ├── data/                 # GEDCOM schema definitions
 └── public/              # Static assets
@@ -183,8 +183,8 @@ familytree/
 - GEDCOM 7.0 import/export
 - Interactive tree visualization
 - Profile and timeline views
-- Dynasty and cluster analysis
-- Statistics dashboard
+- Data quality assessment and validation
+- Classic Parchment theme (genealogy-focused aesthetic)
 
 ### 🔜 Coming Soon
 - **Cloud Persistence** (Firebase integration)
@@ -194,8 +194,6 @@ familytree/
 - **Additional Themes**
   - Modern Minimalist
   - Organic Roots
-  - Slate Professional
-  - Tokyo Noir
 - **Media Support**
   - Photo galleries
   - Document attachments

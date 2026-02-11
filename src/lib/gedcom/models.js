@@ -49,23 +49,6 @@ export class SharedNote {
     }
 }
 
-export const ClusterType = {
-    DYNASTY: 'DYNASTY',
-    SURNAME: 'SURNAME',
-    GEOGRAPHIC: 'GEOGRAPHIC',
-    GENETIC: 'GENETIC'
-};
-
-export const InheritanceType = {
-    AGNATIC: 'AGNATIC', // Only male-line descendants
-    COGNATIC: 'COGNATIC' // All biological descendants
-};
-
-export const SuccessionLaw = {
-    PRIMOGENITURE_ABSOLUTE: 'PRIMOGENITURE_ABSOLUTE', // Oldest child, regardless of gender
-    PRIMOGENITURE_MALE_PREFERENCE: 'PRIMOGENITURE_MALE_PREFERENCE' // Males come before females of same degree
-};
-
 export const ProjectMode = {
     LIGHTWEIGHT: 'LIGHTWEIGHT', // Browser-only, GEDCOM centric
     PERSISTENT: 'PERSISTENT'   // JSON-centric, persistent storage
@@ -113,42 +96,12 @@ export class Family {
     }
 }
 
-export class Cluster {
-    constructor(id) {
-        this.id = id;
-        this.name = '';
-        this.description = '';
-        this.type = ClusterType.DYNASTY;
-        this.definingAncestorId = null; // Pointer to Person ID
-        this.headOfHouseId = null; // Current Head
-        this.color = '#3b82f6'; // Default blue
-        this.personIds = new Set();
-        this.familyIds = new Set();
-
-        // Membership & Succession Rules
-        this.inheritance = InheritanceType.COGNATIC;
-        this.successionLaw = SuccessionLaw.PRIMOGENITURE_ABSOLUTE;
-        this.pruningDegrees = 0; // 0 = no pruning
-
-        this.metadata = {};
-    }
-
-    toJSON() {
-        return {
-            ...this,
-            personIds: Array.from(this.personIds),
-            familyIds: Array.from(this.familyIds)
-        };
-    }
-}
-
 export class Project {
     constructor(name = 'New Project') {
         this.name = name;
         this.mode = ProjectMode.LIGHTWEIGHT;
         this.individuals = [];
         this.families = [];
-        this.clusters = [];
         this.sources = [];
         this.repositories = [];
         this.media = [];
@@ -158,9 +111,20 @@ export class Project {
             lastModified: new Date().toISOString(),
             version: '1.0'
         };
-        this.settings = {
-            defaultDynastyColor: '#3b82f6',
-            autoPruningEnabled: false
+        this.settings = {};
+        // Quality validation results (added for GEDCOM quality assessment feature)
+        this.validationResults = {
+            score: 100,
+            lastValidated: null,
+            issueCount: 0,
+            issues: [],
+            dismissedIssues: new Set(),
+            categoryCounts: {
+                critical: 0,
+                warning: 0,
+                quality: 0,
+                suggestion: 0
+            }
         };
     }
 
@@ -170,6 +134,10 @@ export class Project {
             metadata: {
                 ...this.metadata,
                 lastModified: new Date().toISOString()
+            },
+            validationResults: {
+                ...this.validationResults,
+                dismissedIssues: Array.from(this.validationResults.dismissedIssues || [])
             }
         };
     }

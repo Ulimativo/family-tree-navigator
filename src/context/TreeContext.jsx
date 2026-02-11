@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState, useCallback, useEffect } fr
 import { ProjectMutator } from '../lib/gedcom/mutations.js';
 import { GedcomParser } from '../lib/gedcom/parser.js';
 import { Project, ProjectMode } from '../lib/gedcom/models.js';
+import { validator } from '../lib/gedcom/quality/validator.js';
+import { applyQuickFix, applyBatchQuickFixes } from '../lib/gedcom/quality/fixers.js';
 
 const TreeContext = createContext(null);
 
@@ -10,6 +12,8 @@ export const TreeProvider = ({ children }) => {
     const [focalPersonId, setFocalPersonId] = useState(null);
     const [selectedPersonId, setSelectedPersonId] = useState(null);
     const [isDirty, setIsDirty] = useState(false);
+    const [showQualityReport, setShowQualityReport] = useState(false);
+    const [hasQualityIssues, setHasQualityIssues] = useState(false);
 
     const loadGedcom = useCallback((content, mode = ProjectMode.LIGHTWEIGHT, name = null) => {
         try {
@@ -25,12 +29,23 @@ export const TreeProvider = ({ children }) => {
             newProject.media = result.media;
             newProject.repositories = result.repositories;
             newProject.sharedNotes = result.sharedNotes;
-            newProject.clusters = result.clusters || [];
+
+            // Run quality validation after loading GEDCOM
+            const validationResults = validator.validateProject(newProject);
+            newProject.validationResults = validationResults;
 
             setData(newProject);
 
             if (newProject.individuals.length > 0) {
                 setFocalPersonId(newProject.individuals[0].id);
+            }
+
+            // Auto-show quality report if there are issues
+            if (validationResults.issueCount > 0) {
+                setHasQualityIssues(true);
+                setShowQualityReport(true);
+            } else {
+                setHasQualityIssues(false);
             }
 
             setIsDirty(false);
@@ -40,6 +55,7 @@ export const TreeProvider = ({ children }) => {
             setFocalPersonId(null);
             setSelectedPersonId(null);
             setIsDirty(false);
+            setShowQualityReport(false);
         }
     }, []);
 
@@ -98,63 +114,139 @@ export const TreeProvider = ({ children }) => {
         setIsDirty(true);
     }, []);
 
-    // --- Cluster Actions ---
+    // --- Quality Assessment Actions ---
 
-    const createCluster = useCallback((clusterData) => {
+    const dismissQualityIssue = useCallback((issueId) => {
         setData(prevProject => {
-            const mutator = new ProjectMutator(prevProject);
-            mutator.createCluster(clusterData);
-            return mutator.getProject();
+            if (!prevProject || !prevProject.validationResults) return prevProject;
+            validator.dismissIssue(prevProject.validationResults, issueId);
+            return prevProject;
+        });
+    }, []);
+
+    const restoreQualityIssue = useCallback((issueId) => {
+        setData(prevProject => {
+            if (!prevProject || !prevProject.validationResults) return prevProject;
+            validator.restoreIssue(prevProject.validationResults, issueId);
+            return prevProject;
+        });
+    }, []);
+
+    const revalidateQuality = useCallback((entityId = null, entityType = null) => {
+        setData(prevProject => {
+            if (!prevProject) return prevProject;
+
+            if (entityId && entityType) {
+                // Re-validate specific entity
+                prevProject.validationResults = validator.revalidateEntity(
+                    prevProject,
+                    entityId,
+                    entityType,
+                    prevProject.validationResults
+                );
+            } else {
+                // Re-validate entire project
+                prevProject.validationResults = validator.validateProject(prevProject);
+            }
+
+            // Update quality issues flag
+            setHasQualityIssues(prevProject.validationResults.issueCount > 0);
+
+            return prevProject;
+        });
+    }, []);
+
+    const applyQualityFix = useCallback((issueId, fixData = {}) => {
+        setData(prevProject => {
+            if (!prevProject || !prevProject.validationResults) return prevProject;
+
+            // Find the issue
+            const issue = prevProject.validationResults.issues.find(i => i.id === issueId);
+            if (!issue) return prevProject;
+
+            try {
+                // Apply the fix with user-provided data
+                const fixedProject = applyQuickFix(prevProject, issue, fixData);
+
+                // Re-validate the affected entity
+                fixedProject.validationResults = validator.revalidateEntity(
+                    fixedProject,
+                    issue.entityId,
+                    issue.entityType,
+                    fixedProject.validationResults
+                );
+
+                // Update quality issues flag
+                setHasQualityIssues(fixedProject.validationResults.issueCount > 0);
+
+                return fixedProject;
+            } catch (error) {
+                console.error('Error applying quality fix:', error);
+                return prevProject;
+            }
         });
         setIsDirty(true);
     }, []);
 
-    const updateCluster = useCallback((id, updates) => {
+    const applyBatchFixes = useCallback((issueIds) => {
+        if (!data || !issueIds || issueIds.length === 0) return;
+
         setData(prevProject => {
-            const mutator = new ProjectMutator(prevProject);
-            mutator.updateCluster(id, updates);
-            return mutator.getProject();
-        });
-        setIsDirty(true);
-    }, []);
+            if (!prevProject || !prevProject.validationResults) return prevProject;
 
-    const deleteCluster = useCallback((id) => {
+            try {
+                // Get issues for the provided IDs
+                const issues = issueIds
+                    .map(id => prevProject.validationResults.issues.find(i => i.id === id))
+                    .filter(Boolean);
+
+                // Apply all fixable issues
+                let updatedProject = prevProject;
+                for (const issue of issues) {
+                    if (issue.autoFixable) {
+                        updatedProject = applyQuickFix(updatedProject, issue, {});
+                    }
+                }
+
+                // Re-validate entire project
+                updatedProject.validationResults = validator.validateProject(updatedProject);
+
+                // Update quality issues flag
+                setHasQualityIssues(updatedProject.validationResults.issueCount > 0);
+
+                console.log(`✓ Fixed ${issues.length} issues`);
+
+                return updatedProject;
+            } catch (error) {
+                console.error('Error applying batch fixes:', error);
+                return prevProject;
+            }
+        });
+
+        setIsDirty(true);
+    }, [data]);
+
+    const dismissBatchIssues = useCallback((issueIds) => {
+        if (!data || !issueIds || issueIds.length === 0) return;
+
         setData(prevProject => {
-            const mutator = new ProjectMutator(prevProject);
-            mutator.deleteCluster(id);
-            return mutator.getProject();
+            if (!prevProject || !prevProject.validationResults) return prevProject;
+
+            const newDismissedIssues = new Set(prevProject.validationResults.dismissedIssues || []);
+            issueIds.forEach(id => newDismissedIssues.add(id));
+
+            prevProject.validationResults = {
+                ...prevProject.validationResults,
+                dismissedIssues: newDismissedIssues
+            };
+
+            setHasQualityIssues(prevProject.validationResults.issueCount > 0);
+
+            return prevProject;
         });
+
         setIsDirty(true);
-    }, []);
-
-    const addPersonToCluster = useCallback((clusterId, personId) => {
-        setData(prevProject => {
-            const mutator = new ProjectMutator(prevProject);
-            mutator.addPersonToCluster(clusterId, personId);
-            return mutator.getProject();
-        });
-        setIsDirty(true);
-    }, []);
-
-    const removePersonFromCluster = useCallback((clusterId, personId) => {
-        setData(prevProject => {
-            const mutator = new ProjectMutator(prevProject);
-            mutator.removePersonFromCluster(clusterId, personId);
-            return mutator.getProject();
-        });
-        setIsDirty(true);
-    }, []);
-
-    const addFamilyToCluster = useCallback((clusterId, famId) => {
-        setData(prevProject => {
-            const mutator = new ProjectMutator(prevProject);
-            mutator.addFamilyToCluster(clusterId, famId);
-            return mutator.getProject();
-        });
-        setIsDirty(true);
-    }, []);
-
-
+    }, [data]);
 
     const value = {
         data, // data is the Project instance
@@ -168,13 +260,17 @@ export const TreeProvider = ({ children }) => {
         addEvent,
         updateEvent,
         deleteEvent,
-        createCluster,
-        updateCluster,
-        deleteCluster,
-        addPersonToCluster,
-        removePersonFromCluster,
-        addFamilyToCluster,
-        isDirty
+        isDirty,
+        // Quality assessment
+        showQualityReport,
+        setShowQualityReport,
+        hasQualityIssues,
+        dismissQualityIssue,
+        restoreQualityIssue,
+        revalidateQuality,
+        applyQualityFix,
+        applyBatchFixes,
+        dismissBatchIssues
     };
 
     return (
